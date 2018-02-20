@@ -25,6 +25,8 @@ df = pd.read_csv("training.1600000.processed.noemoticon.csv", sep=",", names=["l
 
 df["lable"] = np.where(df["l"] == 4, "1", "0")
 
+print df["lable"]
+
 headers = ["lable", "tweet"]
 
 
