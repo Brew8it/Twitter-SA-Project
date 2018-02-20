@@ -3,6 +3,9 @@ from sklearn.feature_extraction.text import CountVectorizer
 from sklearn.pipeline import Pipeline
 from sklearn import metrics
 
+import preproc.py
+
+
 target_names = ['Positive', 'Negative']
 
 # Train the model
