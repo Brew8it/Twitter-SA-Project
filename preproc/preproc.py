@@ -30,10 +30,10 @@ class preProc(object):
         # test remove hashtags, numbers, and special chars
         self.remove_hashtag()
         # test for tokenize
-        self.tokenize()
+        # self.tokenize()
         # test word stemming
-        self.word_stemming()
-        self.remove_stopwords()
+        # self.word_stemming()
+        # self.remove_stopwords()
 
     def get_twitter_df(self):
         return self.df[['lable', "tweet"]]
@@ -57,7 +57,7 @@ class preProc(object):
 
     def tokenize(self):
         # https://stackoverflow.com/questions/33098040/how-to-use-word-tokenize-in-data-frame
-        # self.df["tweet"] = self.df.apply(lambda row: word_tokenize(row["tweet"]), axis=1)
+        #self.df["tweet"] = self.df.apply(lambda row: word_tokenize(row["tweet"]), axis=1)
         self.df["tweet"] = self.df["tweet"].str.lower().str.split()
 
     def word_stemming(self):
