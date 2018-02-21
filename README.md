@@ -7,5 +7,7 @@ Dependencies
 * scikit-learn
 * Pandas
 * nltk
+* tweepy
+* bs4
 
 
