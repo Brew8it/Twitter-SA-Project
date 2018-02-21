@@ -89,7 +89,6 @@ class preProc(object):
         # self.df["tweet"] = self.df.apply(lambda row: word_tokenize(row["tweet"]), axis=1) bajs lambda
         self.df["tweet"] = self.df["tweet"].apply(word_tokenize)
 
-
     def word_stemming(self):
         self.df["tweet"] = self.df["tweet"].apply(lambda x: [stemmer.stem(y) for y in x])
 
