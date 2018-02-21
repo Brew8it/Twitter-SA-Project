@@ -13,9 +13,9 @@ pp.clean_data()
 df = pp.get_twitter_df()
 
 
-X_train, X_test, y_train, y_test = train_test_split(df.tweet,df.lable , test_size=0.1, random_state=0)
+X_train, X_test, y_train, y_test = train_test_split(df.tweet, df.lable, test_size=0.2, random_state=0)
 
-# print X_train
+print X_train
 
 target_names = ['Positive', 'Negative']
 
