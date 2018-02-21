@@ -5,6 +5,7 @@ from sklearn.model_selection import train_test_split
 from sklearn import metrics
 from sklearn.externals import joblib
 
+
 from preproc import preproc
 
 pp = preproc.preProc()
@@ -16,7 +17,7 @@ df = pp.get_twitter_df()
 
 X_train, X_test, y_train, y_test = train_test_split(df.tweet, df.lable, test_size=0.2, random_state=0)
 
-print X_train
+print(X_train)
 
 target_names = ['Positive', 'Negative']
 

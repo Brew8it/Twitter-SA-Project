@@ -1,6 +1,7 @@
 # coding=utf-8
 import os
 import pandas as pd
+from miner import miner
 from bs4 import BeautifulSoup
 from nltk.corpus import stopwords
 from nltk import word_tokenize
@@ -13,7 +14,7 @@ import unicodedata
 # python -m spacy download en
 # nlp = spacy.load('en', parse=False, tag=False, entity=False)
 
-pd.options.display.max_colwidth = 200
+#pd.options.display.max_colwidth = 200
 
 stemmer = SnowballStemmer('english')
 stop = stopwords.words('english')
@@ -31,7 +32,7 @@ class preProc(object):
         self.df.columns = ["num","lable", "tweet"]
 
     def loadOwnDataFrame(self, dataframe):
-        self.df = dataframe
+        self.df = dataframe.dropna()
 
     def clean_data(self, html_strpping=True, accented_char_removal=True, to_lower=True, remove_links=True, remove_mentions=True,
                    remove_hashtag=True, remove_extra_whitespace=True, tokenize=True, stemming=True, remake_document=True):
@@ -59,7 +60,8 @@ class preProc(object):
             self.remake_tweets()
 
     def get_twitter_df(self):
-        return self.df[['lable', "tweet"]]
+        # return self.df[['lable', "tweet"]]
+        return self.df
 
     def remove_html_encode(self):
         # https://stackoverflow.com/questions/44703945/pandas-trouble-stripping-html-tags-from-dataframe-column
@@ -84,7 +86,8 @@ class preProc(object):
         self.df.loc[:, "tweet"] = self.df.loc[:, "tweet"].replace(' +', ' ', regex=True)
 
     def tokenize(self):
-        self.df["tweet"] = self.df.apply(lambda row: word_tokenize(row["tweet"]), axis=1)
+        # self.df["tweet"] = self.df.apply(lambda row: word_tokenize(row["tweet"]), axis=1) bajs lambda
+        self.df["tweet"] = self.df["tweet"].apply(word_tokenize)
 
 
     def word_stemming(self):
@@ -107,4 +110,12 @@ if __name__ == "__main__":
     test.loadCsv("../datasets/SemEval/4A-English/", "SemEval.csv")
     test.clean_data()
     df = test.get_twitter_df()
-    print df[:50]
+    print(df[:50])
+    test = preProc()
+    tweet_miner = miner.TwitterMiner()
+    # tweet_miner.collect_tweets_from_searching("#svpol", 10)
+    df = tweet_miner.collect_tweets_from_user_feed("danlevene", 10)
+    test.loadOwnDataFrame(df[["date", "length", "tweet"]])
+    test.clean_data()
+    df = test.get_twitter_df()
+    print(df)
