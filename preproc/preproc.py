@@ -30,6 +30,9 @@ class preProc(object):
         self.df = pd.read_csv(name, header=None).dropna()
         self.df.columns = ["num","lable", "tweet"]
 
+    def loadOwnDataFrame(self, dataframe):
+        self.df = dataframe
+
     def clean_data(self, html_strpping=True, accented_char_removal=True, to_lower=True, remove_links=True, remove_mentions=True,
                    remove_hashtag=True, remove_extra_whitespace=True, tokenize=True, stemming=True, remake_document=True):
         if html_strpping:
