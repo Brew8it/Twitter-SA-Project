@@ -1,8 +1,11 @@
+import os
 from sklearn.linear_model import SGDClassifier
 from sklearn.feature_extraction.text import CountVectorizer, TfidfTransformer
 from sklearn.pipeline import Pipeline
 from sklearn.model_selection import train_test_split
 from sklearn import metrics
+from sklearn.externals import joblib
+
 
 from preproc import preproc
 
@@ -33,6 +36,6 @@ predicted = svm_unigram_clf.predict(X_test)
 # Print evaluation metrics
 print(metrics.classification_report(y_test, predicted, target_names=target_names))
 
-
+joblib.dump(svm_unigram_clf, "../../../models/SVM_base.pkl")
 
 

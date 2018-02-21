@@ -3,6 +3,7 @@ from sklearn.feature_extraction.text import CountVectorizer, TfidfTransformer
 from sklearn.pipeline import Pipeline
 from sklearn.model_selection import train_test_split
 from sklearn import metrics
+from sklearn.externals import joblib
 
 from preproc import preproc
 
@@ -33,6 +34,4 @@ predicted = nb_unigram_clf.predict(X_test)
 # Print evaluation metrics
 print(metrics.classification_report(y_test, predicted, target_names=target_names))
 
-
-
-
+joblib.dump(nb_unigram_clf, "../../../models/NB_base.pkl")
