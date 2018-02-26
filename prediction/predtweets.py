@@ -31,6 +31,7 @@ class Prediction:
             pred = clf.predict(text)
             print(self.twitterDF.tweet)
             print(pred)
+            # spara till DB istället?
 
     def get_twitter_data(self, name, numTweets):
         self.twitterDF = self.twitterMiner.collect_tweets_from_user_feed(name, numTweets)
