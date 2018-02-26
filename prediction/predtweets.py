@@ -1,7 +1,9 @@
 from sklearn.externals import joblib
+import pandas as pd
 
 from miner import miner
 from preproc import preproc
+pd.options.display.max_colwidth = 250
 
 
 class Prediction:
@@ -10,32 +12,38 @@ class Prediction:
     def __init__(self):
         self.clflist = []
         self.load_models()
+        self.twitterMiner = miner.TwitterMiner()
+        self.twitterDF = pd.DataFrame
+        self.cleanTwitterDF = pd.DataFrame
+        self.preProcess = preproc.preProc()
 
     def load_models(self):
         for clf in self.modelnames:
             self.clflist.append(joblib.load(clf))
 
-    def make_predictions(self, text):
+    def make_predictions(self, name, numTweets):
+        self.get_twitter_data(name, numTweets)
+        self.make_preproc()
+        self.predict(self.cleanTwitterDF.tweet)
+
+    def predict(self, text):
         for clf in self.clflist:
             pred = clf.predict(text)
+            print(self.twitterDF.tweet)
             print(pred)
+
+    def get_twitter_data(self, name, numTweets):
+        self.twitterDF = self.twitterMiner.collect_tweets_from_user_feed(name, numTweets)
+
+    def make_preproc(self):
+        self.preProcess.loadOwnDataFrame(self.twitterDF)
+        self.preProcess.clean_data()
+        self.cleanTwitterDF = self.preProcess.get_twitter_df()
 
 
 if __name__ == "__main__":
-    twitterMiner = miner.TwitterMiner()
-    preProcess = preproc.preProc()
     prediction = Prediction()
-
-    name = input("Enter a name: ")
-    numTweets = input("Enter how many Tweets to download: ")
-    print(name + "::." + numTweets)
-    twitterDf = twitterMiner.collect_tweets_from_user_feed(name, numTweets)
-    print(twitterDf.tweet)
-    preProcess.loadOwnDataFrame(twitterDf)
-    preProcess.clean_data()
-    twitterDf = preProcess.get_twitter_df()
-
-    prediction.make_predictions(twitterDf.tweet)
+    prediction.make_predictions("danlevene", "10")
 
 
 
