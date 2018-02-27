@@ -1,3 +1,4 @@
+import numpy
 from sklearn.externals import joblib
 import pandas as pd
 
@@ -16,6 +17,7 @@ class Prediction:
         self.twitterDF = pd.DataFrame
         self.cleanTwitterDF = pd.DataFrame
         self.preProcess = preproc.preProc()
+        self.numberOfposNeg = []
 
     def load_models(self):
         for clf in self.modelnames:
@@ -26,12 +28,21 @@ class Prediction:
         self.make_preproc()
         self.predict(self.cleanTwitterDF.tweet)
 
+    def make_posneg_list(self, predlist):
+        #pos, #neg # nodata
+        _, counts = numpy.unique(predlist, return_counts=True)
+        lst = list(reversed(counts))
+        lst.append(0)
+        self.numberOfposNeg.append(lst)
+
+
     def predict(self, text):
         for clf in self.clflist:
             pred = clf.predict(text)
-            print(self.twitterDF.tweet)
-            print(pred)
+            self.make_posneg_list(pred)
+            #print(self.twitterDF.tweet)
             # spara till DB istället?
+        print(self.numberOfposNeg)
 
     def get_twitter_data(self, name, numTweets):
         self.twitterDF = self.twitterMiner.collect_tweets_from_user_feed(name, numTweets)
