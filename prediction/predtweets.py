@@ -18,6 +18,7 @@ class Prediction:
         self.cleanTwitterDF = pd.DataFrame
         self.preProcess = preproc.preProc()
         self.numberOfposNeg = []
+        self.db_list = []
 
     def load_models(self):
         for clf in self.modelnames:
@@ -26,6 +27,7 @@ class Prediction:
     def db_make_predictions(self, name, numTweets):
         self.get_twitter_data(name,numTweets)
         self.make_preproc()
+        self.predict(self.cleanTwitterDF.tweet)
 
 
     def make_predictions(self, name, numTweets):
@@ -33,6 +35,8 @@ class Prediction:
         self.make_preproc()
         self.predict(self.cleanTwitterDF.tweet)
         return self.numberOfposNeg
+
+    def make_db_list(self):
 
     def make_posneg_list(self, predlist):
         #pos, #neg # nodata
