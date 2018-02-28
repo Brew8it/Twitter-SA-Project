@@ -8,8 +8,8 @@ pd.options.display.max_colwidth = 250
 
 
 class Prediction:
-    #modelnames = ["../models/SVM_base.pkl", "../models/NB_base.pkl"]
-    modelnames = ["../../models/SVM_base.pkl", "../../models/NB_base.pkl"]
+    #modelnames = ["../models/NB_base.pkl", "../models/NB_base_STS.pkl", "../models/SVM_base.pkl", "../models/SVM_base_STS.pkl"]
+    modelnames = ["../../models/NB_base.pkl", "../../models/NB_base_STS.pkl", "../../models/SVM_base.pkl", "../../models/SVM_base_STS.pkl"]
     def __init__(self):
         self.clflist = []
         self.load_models()
@@ -18,6 +18,7 @@ class Prediction:
         self.cleanTwitterDF = pd.DataFrame
         self.preProcess = preproc.preProc()
         self.numberOfposNeg = []
+        self.pred_list = []
         self.db_list = []
 
     def load_models(self):
@@ -28,6 +29,8 @@ class Prediction:
         self.get_twitter_data(name,numTweets)
         self.make_preproc()
         self.predict(self.cleanTwitterDF.tweet)
+        self.make_db_list()
+        return self.db_list
 
 
     def make_predictions(self, name, numTweets):
@@ -37,6 +40,13 @@ class Prediction:
         return self.numberOfposNeg
 
     def make_db_list(self):
+        # change this dependeing on how many models!!
+        # NBSE, NBSTS, SVMSE, SVMSTS
+        NBSE = self.pred_list[0]
+        NBSTS = self.pred_list[1]
+        SVMSE = self.pred_list[2]
+        SVMSTS = self.pred_list[3]
+        self.db_list = [list(e) for e in zip(list(self.twitterDF.tweet),NBSE, NBSTS, SVMSE, SVMSTS)]
 
     def make_posneg_list(self, predlist):
         #pos, #neg # nodata
@@ -50,6 +60,7 @@ class Prediction:
         for clf in self.clflist:
             pred = clf.predict(text)
             self.make_posneg_list(pred)
+            self.pred_list.append(list(pred))
 
 
     def get_twitter_data(self, name, numTweets):
@@ -63,7 +74,7 @@ class Prediction:
 
 if __name__ == "__main__":
     prediction = Prediction()
-    prediction.make_predictions("danlevene", "10")
+    prediction.db_make_predictions("danlevene", "10")
 
 
 
