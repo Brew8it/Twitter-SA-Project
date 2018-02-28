@@ -234,17 +234,19 @@
 
 <script type="text/javascript">
     $(document).ready(function(){
-        var series = {{series}}
-        var data = {
-            labels: [" ", " ", " "],
-            series: series
-        };
-        Chartist.Pie('#NB_SemEval', data);
-        Chartist.Pie('#SVM_SemEval', data);
-        Chartist.Pie('#NB_STS', data);
-        Chartist.Pie('#SVM_STS', data);
+        Chartist.Pie('#NB_SemEval', get_data({{NBSE.series}}));
+        Chartist.Pie('#NB_STS', get_data({{NBSTS.series}}));
+        Chartist.Pie('#SVM_SemEval', get_data({{SVMSE.series}}));
+        Chartist.Pie('#SVM_STS', get_data({{SVMSTS.series}}));
 
     });
+
+    function get_data(series) {
+        return {
+            labels: [" ", " ", " "],
+            series: series
+            };
+    }
 
 </script>
 
