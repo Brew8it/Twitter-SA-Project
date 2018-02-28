@@ -23,6 +23,11 @@ class Prediction:
         for clf in self.modelnames:
             self.clflist.append(joblib.load(clf))
 
+    def db_make_predictions(self, name, numTweets):
+        self.get_twitter_data(name,numTweets)
+        self.make_preproc()
+
+
     def make_predictions(self, name, numTweets):
         self.get_twitter_data(name, numTweets)
         self.make_preproc()
@@ -41,9 +46,7 @@ class Prediction:
         for clf in self.clflist:
             pred = clf.predict(text)
             self.make_posneg_list(pred)
-            #print(self.twitterDF.tweet)
-            # spara till DB istället?
-        print(self.numberOfposNeg)
+
 
     def get_twitter_data(self, name, numTweets):
         self.twitterDF = self.twitterMiner.collect_tweets_from_user_feed(name, numTweets)
