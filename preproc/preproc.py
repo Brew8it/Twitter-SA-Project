@@ -14,7 +14,7 @@ import unicodedata
 # python -m spacy download en
 # nlp = spacy.load('en', parse=False, tag=False, entity=False)
 
-#pd.options.display.max_colwidth = 200
+pd.options.display.max_colwidth = 200
 
 stemmer = SnowballStemmer('english')
 stop = stopwords.words('english')
@@ -28,7 +28,7 @@ class preProc(object):
 
     def loadCsv(self, path, name):
         os.chdir(path)
-        self.df = pd.read_csv(name, header=None).dropna()
+        self.df = pd.read_csv(name, sep=",").dropna()
         self.df.columns = ["num","lable", "tweet"]
 
     def loadOwnDataFrame(self, dataframe):
@@ -106,10 +106,12 @@ class preProc(object):
 
 if __name__ == "__main__":
     test = preProc()
-    test.loadCsv("../datasets/SemEval/4A-English/", "SemEval.csv")
+    test.loadCsv("../datasets/STS/", "STS_test.csv")
+    #test.loadCsv("../datasets/SemEval/4A-English/", "SemEval.csv")
+
     test.clean_data()
     df = test.get_twitter_df()
-    print(df[:50])
+    print(df)
     test = preProc()
     tweet_miner = miner.TwitterMiner()
     # tweet_miner.collect_tweets_from_searching("#svpol", 10)
