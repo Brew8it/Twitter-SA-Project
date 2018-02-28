@@ -1,5 +1,6 @@
 # import the Flask class from the flask module
 from flask import Flask, render_template, request, url_for, redirect
+from prediction import predtweets
 
 # create the application object
 app = Flask(__name__)
@@ -14,7 +15,7 @@ def home():
         username = request.form['username']
         numberOfTweets = request.form['numberOfTweets']
 
-        return redirect(url_for('dashboard'))
+        return redirect(url_for('dashboard', username=username, numberOfTweets=numberOfTweets))
     else:
 
         return render_template('index.html')
@@ -24,12 +25,29 @@ def home():
 # Pass parameter to know if we should pass 0,0,100 / passed search or do new search
 def dashboard():
     #fake data
-    series = [20, 40, 0]
+    #series = [20, 40, 0]
     #nodata
-    series = [0, 0, 100]
+
+    username = request.args['username']
+    numberOfTweets = request.args['numberOfTweets']
+
+    print(username)
+
+    prediction = predtweets.Prediction()
+
+    lst = prediction.make_predictions(username, numberOfTweets)
+
+    print(lst)
+
+    series = {
+        'NBSE': {'series': lst[0]},
+        'NBSTS': {'series': [0, 0, 1]},
+        'SVMSE': {'series': lst[1]},
+        'SVMSTS': {'series': [0, 0, 1]}
+    }
     data = "tssttssttssttssttssttssttssttssttssttssttssttssttssttssttssttssttssttssttssttssttssttssttssttssttssttssttssttssttssttssttssttssttssttssttssttssttssttssttssttssttssttssttssttssttssttssttssttssttssttssttssttssttssttssttssttssttssttssttssttssttssttssttssttssttssttssttssttssttssttssttssttssttssttssttssttssttssttssttssttssttssttssttssttssttssttssttssttssttssttssttssttssttssttssttssttssttssttssttssttssttssttssttssttssttssttssttssttssttssttssttssttsst"
 
-    return render_template('dashboard.html', series=series, item=data)
+    return render_template('dashboard.html', **series, item=data)
 
 # start the server with the 'run()' method
 if __name__ == '__main__':
