@@ -8,8 +8,8 @@ pd.options.display.max_colwidth = 250
 
 
 class Prediction:
-    modelnames = ["../models/SVM_base.pkl", "../models/NB_base.pkl"]
-
+    #modelnames = ["../models/SVM_base.pkl", "../models/NB_base.pkl"]
+    modelnames = ["../../models/SVM_base.pkl", "../../models/NB_base.pkl"]
     def __init__(self):
         self.clflist = []
         self.load_models()
@@ -27,6 +27,7 @@ class Prediction:
         self.get_twitter_data(name, numTweets)
         self.make_preproc()
         self.predict(self.cleanTwitterDF.tweet)
+        return self.numberOfposNeg
 
     def make_posneg_list(self, predlist):
         #pos, #neg # nodata
