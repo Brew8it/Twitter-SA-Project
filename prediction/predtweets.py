@@ -32,7 +32,7 @@ class Prediction:
         self.make_db_list()
         return self.db_list
 
-
+    # for internal bib testing...
     def make_predictions(self, name, numTweets):
         self.get_twitter_data(name, numTweets)
         self.make_preproc()
@@ -60,8 +60,8 @@ class Prediction:
         for clf in self.clflist:
             pred = clf.predict(text)
             self.make_posneg_list(pred)
-            self.pred_list.append(list(pred))
-
+            # Convert to int list so it will fit into DB.
+            self.pred_list.append([int(i) for i in pred])
 
     def get_twitter_data(self, name, numTweets):
         self.twitterDF = self.twitterMiner.collect_tweets_from_user_feed(name, numTweets)
