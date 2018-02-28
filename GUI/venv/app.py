@@ -26,10 +26,6 @@ def home():
 
         insert_search_with_tweets(username, numberOfTweets, predicted_tweets)
 
-        print("Search")
-        print(get_search_records())
-        print("Tweets")
-        print(get_tweets_records())
 
         return redirect(url_for('dashboard', username=username, numberOfTweets=numberOfTweets))
     else:
