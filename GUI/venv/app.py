@@ -1,6 +1,7 @@
 # import the Flask class from the flask module
 from flask import Flask, render_template, request, url_for, redirect
 from prediction import predtweets
+from db import *
 
 # create the application object
 app = Flask(__name__)
@@ -11,9 +12,24 @@ app = Flask(__name__)
 def home():
     tdata = ["test", "test2"]
 
+
+
     if request.method == "POST":
         username = request.form['username']
         numberOfTweets = request.form['numberOfTweets']
+
+        prediction = predtweets.Prediction()
+
+        predicted_tweets = prediction.db_make_predictions(username, numberOfTweets)
+
+        print(predicted_tweets)
+
+        insert_search_with_tweets(username, numberOfTweets, predicted_tweets)
+
+        print("Search")
+        print(get_search_records())
+        print("Tweets")
+        print(get_tweets_records())
 
         return redirect(url_for('dashboard', username=username, numberOfTweets=numberOfTweets))
     else:

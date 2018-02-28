@@ -1,6 +1,6 @@
 drop table if exists search;
 create table search (
-    search_id integer primary key autoincrement,
+    id integer primary key autoincrement,
     uname text not null,
     numOfTweets integer not null
 );
@@ -14,7 +14,7 @@ create table tweets (
     SVMSE integer not null,
     SVMSTS integer not null,
     search_id integer not null,
-    foreign key (search_id) references search(search_id)
+    foreign key (search_id) references search(id)
             on update cascade
             on delete cascade
 );
