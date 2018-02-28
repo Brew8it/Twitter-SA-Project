@@ -18,16 +18,12 @@ def home():
         username = request.form['username']
         numberOfTweets = request.form['numberOfTweets']
 
+        clear_searches()  # Clear recent search
         prediction = predtweets.Prediction()
-
         predicted_tweets = prediction.db_make_predictions(username, numberOfTweets)
-
-        print(predicted_tweets)
-
         insert_search_with_tweets(username, numberOfTweets, predicted_tweets)
 
-
-        return redirect(url_for('dashboard', username=username, numberOfTweets=numberOfTweets))
+        return redirect(url_for('dashboard'))
     else:
 
         return render_template('index.html')
@@ -36,27 +32,18 @@ def home():
 @app.route('/dashboard')
 # Pass parameter to know if we should pass 0,0,100 / passed search or do new search
 def dashboard():
-    #fake data
-    #series = [20, 40, 0]
-    #nodata
 
-    username = request.args['username']
-    numberOfTweets = request.args['numberOfTweets']
+    sentiment_result = get_posneg()
 
-    print(username)
-
-    prediction = predtweets.Prediction()
-
-    lst = prediction.make_predictions(username, numberOfTweets)
-
-    print(lst)
+    print(sentiment_result)
 
     series = {
-        'NBSE': {'series': lst[0]},
-        'NBSTS': {'series': [0, 0, 1]},
-        'SVMSE': {'series': lst[1]},
-        'SVMSTS': {'series': [0, 0, 1]}
+        'NBSE': {'series': sentiment_result["NBSE"]},
+        'NBSTS': {'series': sentiment_result["NBSTS"]},
+        'SVMSE': {'series': sentiment_result["SVMSE"]},
+        'SVMSTS': {'series': sentiment_result["SVMSTS"]}
     }
+
     data = "tssttssttssttssttssttssttssttssttssttssttssttssttssttssttssttssttssttssttssttssttssttssttssttssttssttssttssttssttssttssttssttssttssttssttssttssttssttssttssttssttssttssttssttssttssttssttssttssttssttssttssttssttssttssttssttssttssttssttssttssttssttssttssttssttssttssttssttssttssttssttssttssttssttssttssttssttssttssttssttssttssttssttssttssttssttssttssttssttssttssttssttssttssttssttssttssttssttssttssttssttssttssttssttssttssttssttssttssttssttssttssttsst"
 
     return render_template('dashboard.html', **series, item=data)

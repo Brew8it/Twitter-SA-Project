@@ -6,14 +6,14 @@ def insert_search_with_tweets(uname, numOfTweets, predictedTweets):
         cur = con.cursor()
         # Insert search record
         cur.execute("INSERT INTO search (uname, numOfTweets) VALUES (?, ?)", (uname, numOfTweets))
-        # Insert tweet record
-        print(predictedTweets)
+        search_id = cur.lastrowid
 
+        # Insert tweet record
         for predictedTweet in predictedTweets:
             print(predictedTweet)
             cur.execute("INSERT INTO tweets (tweet, NBSE, NBSTS, SVMSE, SVMSTS, search_id) VALUES (?, ?, ?, ?, ?, ?)",
                     (predictedTweet[0], predictedTweet[1], predictedTweet[2], predictedTweet[3], predictedTweet[4],
-                     cur.lastrowid))
+                     search_id))
         con.commit()
 
 
@@ -51,21 +51,21 @@ def get_pos_neg_count(classifier):
 
 def clear_searches():
     with sql.connect("database/database.db") as con:
-        con.execute("PRAGMA foreign_keys = ON") # Has to be enabled manually for every connection
+        con.execute("PRAGMA foreign_keys = ON")  # Has to be enabled manually for every connection
         cur = con.cursor()
         cur.execute("DELETE FROM search")
+        #cur.execute("DELETE FROM tweets")
 
 def main():
     clear_searches()
-    #insert_search_with_tweets("Kalle Kula", 10, 2)
-    print("Search")
-    print(get_search_records())
-    print("Tweets")
-    print(get_tweets_records())
-    print("Negative tweets:")
-    get_posneg()
 
-    #insert_search_with_tweets("asdf", 12, [["asdasd", 1, 0, 1, 1]])
+    #insert_search_with_tweets("Kalle Kula", 10, 2)
+    #print("Search")
+    #print(get_search_records())
+    #print("Tweets")
+    #print(get_tweets_records())
+    #print("Negative tweets:")
+    #get_posneg()
 
 if __name__ == "__main__":
     main()
