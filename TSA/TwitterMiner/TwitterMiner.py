@@ -1,7 +1,5 @@
 from TSA.TwitterMiner import keys
-
 import tweepy
-# import keys
 import pandas as pd
 import numpy as np
 
@@ -9,7 +7,7 @@ import numpy as np
 
 # from IPython.display import display
 
-pd.options.display.max_colwidth = 200
+pd.options.display.max_colwidth = 300
 
 
 class TwitterMiner:
@@ -31,15 +29,17 @@ class TwitterMiner:
         return df
 
     def collect_tweets_from_user_feed(self, username, number_of_tweets):
-        tweets = self.api.user_timeline(screen_name=username, count=number_of_tweets)
+        # Use the tweet_mode='extended' to be able to get full length tweets.
+        # Twitter has made API changes that tweets will be truncated after 140 chars is tweet_mode is not specified
+        tweets = self.api.user_timeline(screen_name=username, count=number_of_tweets, tweet_mode='extended')
         df = self.create_data_frame(tweets)
         return df
         # df.to_csv("tweets.csv")
 
     def create_data_frame(self, tweets):
-        df = pd.DataFrame(data=[tweet.text for tweet in tweets], columns=['tweet'])
+        df = pd.DataFrame(data=[tweet.full_text for tweet in tweets], columns=['tweet'])
         df['date'] = np.array([tweet.created_at for tweet in tweets])
-        df['length'] = np.array([len(tweet.text) for tweet in tweets])
+        df['length'] = np.array([len(tweet.full_text) for tweet in tweets])
 
         return df
 
@@ -49,4 +49,6 @@ class TwitterMiner:
 def main():
     tweet_miner = TwitterMiner()
     # tweet_miner.collect_tweets_from_searching("#svpol", 10)
-    tweet_miner.collect_tweets_from_user_feed("danlevene", 10)
+    twitterdf = tweet_miner.collect_tweets_from_user_feed("realdonaldtrump", 1)
+    print(twitterdf)
+
