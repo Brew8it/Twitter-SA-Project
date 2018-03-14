@@ -64,29 +64,7 @@
         <div class="content">
             <div class="container-fluid">
                 <div class="row">
-                    <div class="col-md-3">
-                        <div class="card">
-
-                            <div class="header">
-                                <h4 class="title">Naive Bayes - SemEval dataset</h4>
-                                <p class="category">Positive / Negative</p>
-                            </div>
-                            <div class="content">
-                                <div id="NB_SemEval" class="ct-chart ct-perfect-fourth"></div>
-
-
-                                <div class="footer">
-                                    <div class="legend">
-                                        <i class="fa fa-circle text-info"></i> Positive
-                                        <i class="fa fa-circle text-danger"></i> Negative
-                                        <i class="fa fa-circle text-warning"></i> No-Data
-                                    </div>
-                                    <hr>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-3">
+                    <div class="col-md-4">
                         <div class="card">
 
                             <div class="header">
@@ -108,7 +86,76 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-3">
+
+                    <div class="col-md-4">
+                        <div class="card">
+
+                            <div class="header">
+                                <h4 class="title">SVM - STS dataset</h4>
+                                <p class="category">Positive / Negative</p>
+                            </div>
+                            <div class="content">
+                                <div id="SVM_STS" class="ct-chart ct-perfect-fourth"></div>
+
+
+                                <div class="footer">
+                                    <div class="legend">
+                                        <i class="fa fa-circle text-info"></i> Positive
+                                        <i class="fa fa-circle text-danger"></i> Negative
+                                        <i class="fa fa-circle text-warning"></i> No-Data
+                                    </div>
+                                    <hr>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="card">
+
+                            <div class="header">
+                                <h4 class="title">CNN - STS dataset</h4>
+                                <p class="category">Positive / Negative</p>
+                            </div>
+                            <div class="content">
+                                <div id="CNN_STS" class="ct-chart ct-perfect-fourth"></div>
+
+
+                                <div class="footer">
+                                    <div class="legend">
+                                        <i class="fa fa-circle text-info"></i> Positive
+                                        <i class="fa fa-circle text-danger"></i> Negative
+                                        <i class="fa fa-circle text-warning"></i> No-Data
+                                    </div>
+                                    <hr>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                     <div class="col-md-4">
+                        <div class="card">
+
+                            <div class="header">
+                                <h4 class="title">Naive Bayes - SemEval dataset</h4>
+                                <p class="category">Positive / Negative</p>
+                            </div>
+                            <div class="content">
+                                <div id="NB_SemEval" class="ct-chart ct-perfect-fourth"></div>
+
+
+                                <div class="footer">
+                                    <div class="legend">
+                                        <i class="fa fa-circle text-info"></i> Positive
+                                        <i class="fa fa-circle text-danger"></i> Negative
+                                        <i class="fa fa-circle text-warning"></i> No-Data
+                                    </div>
+                                    <hr>
+                                </div>
+                            </div>
+                        </div>
+                     </div>
+                     <div class="col-md-4">
                         <div class="card">
 
                             <div class="header">
@@ -129,16 +176,16 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="col-md-3">
+                     </div>
+                     <div class="col-md-4">
                         <div class="card">
 
                             <div class="header">
-                                <h4 class="title">SVM - STS dataset</h4>
+                                <h4 class="title">CNN - SemEval dataset</h4>
                                 <p class="category">Positive / Negative</p>
                             </div>
                             <div class="content">
-                                <div id="SVM_STS" class="ct-chart ct-perfect-fourth"></div>
+                                <div id="CNN_SemEval" class="ct-chart ct-perfect-fourth"></div>
 
 
                                 <div class="footer">
@@ -164,20 +211,18 @@
                             <table class="table table-dark" id="table">
                                 <thead>
                                 <tr>
-                                    <th class="col-md-8"data-field="tweet">Tweet</th>
+                                    <th class="col-md-6"data-field="tweet">Tweet</th>
                                     <th class="col-md-1" data-field="Sentiment">NBSTS</th>
                                     <th class="col-md-1" data-field="Sentiment">SVMSTS</th>
                                     <th class="col-md-1" data-field="Sentiment">SVMSE</th>
                                     <th class="col-md-1" data-field="Sentiment">NBSE</th>
+                                    <th class="col-md-1" data-field="Sentiment">CNNSE</th>
+                                    <th class="col-md-1" data-field="Sentiment">CNNSTS</th>
                                 </tr>
                                 {% for item in tdata %}
                                 <tr>
                                     {% for i in item %}
                                     <td>{{i}}</td>
-                                    <!--<td>{{item[2]}}</td>-->
-                                    <!--<td>{{item[3]}}</td>-->
-                                    <!--<td>{{item[4]}}</td>-->
-                                    <!--<td>{{item[5]}}</td>-->
                                     {% endfor %}
                                 </tr>
                                 {% endfor %}
@@ -232,6 +277,8 @@
         Chartist.Pie('#NB_STS', get_data({{NBSTS.series}}));
         Chartist.Pie('#SVM_SemEval', get_data({{SVMSE.series}}));
         Chartist.Pie('#SVM_STS', get_data({{SVMSTS.series}}));
+        Chartist.Pie('#CNN_SemEval', get_data({{CNNSTS.series}}));
+        Chartist.Pie('#CNN_STS', get_data({{CNNSE.series}}));
 
     });
 

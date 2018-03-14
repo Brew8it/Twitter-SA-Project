@@ -13,6 +13,8 @@ create table tweets (
     NBSTS integer not null,
     SVMSE integer not null,
     SVMSTS integer not null,
+    CNNSE integer not null,
+    CNNSTS integer not null,
     search_id integer not null,
     foreign key (search_id) references search(id)
             on update cascade

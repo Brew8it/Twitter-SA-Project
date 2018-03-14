@@ -40,7 +40,9 @@ def dashboard():
         'NBSE': {'series': sentiment_result["NBSE"]},
         'NBSTS': {'series': sentiment_result["NBSTS"]},
         'SVMSE': {'series': sentiment_result["SVMSE"]},
-        'SVMSTS': {'series': sentiment_result["SVMSTS"]}
+        'SVMSTS': {'series': sentiment_result["SVMSTS"]},
+        'CNNSE': {'series': sentiment_result["CNNSE"]},
+        'CNNSTS': {'series': sentiment_result["CNNSTS"]},
     }
 
     #data = [['Perhaps at no time in history have the business fundamentals of U.S. companies been better than they are today!Perhaps at no time in history have the business fundamentals of U.S. companies been better than they are today!', 1, 1, 1, 1], ['Perhaps at no time in history have the business fundamentals of U.S. companies been better than they are today!', 1, 1, 1, 1]]
