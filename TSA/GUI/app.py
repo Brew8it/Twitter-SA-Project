@@ -43,9 +43,12 @@ def dashboard():
         'SVMSTS': {'series': sentiment_result["SVMSTS"]}
     }
 
-    data = "tssttssttssttssttssttssttssttssttssttssttssttssttssttssttssttssttssttssttssttssttssttssttssttssttssttssttssttssttssttssttssttssttssttssttssttssttssttssttssttssttssttssttssttssttssttssttssttssttssttssttssttssttssttssttssttssttssttssttssttssttssttssttssttssttssttssttssttssttssttssttssttssttssttssttssttssttssttssttssttssttssttssttssttssttssttssttssttssttssttssttssttssttssttssttssttssttssttssttssttssttssttssttssttssttssttssttssttssttssttssttssttsst"
+    #data = [['Perhaps at no time in history have the business fundamentals of U.S. companies been better than they are today!Perhaps at no time in history have the business fundamentals of U.S. companies been better than they are today!', 1, 1, 1, 1], ['Perhaps at no time in history have the business fundamentals of U.S. companies been better than they are today!', 1, 1, 1, 1]]
+    data = get_tweets_records()
 
-    return render_template('dashboard.html', **series, item=data)
+    print(data)
+
+    return render_template('dashboard.html', **series, tdata=data)
 
 
 # start the server with the 'run()' method

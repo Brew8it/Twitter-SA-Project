@@ -156,39 +156,33 @@
 
                 <div class="row">
                     <div class="col-md-12">
-                        <div class="card card-plain">
+                        <div class="card">
+
                             <div class="header">
-                                <h4 class="title">Table on Plain Background</h4>
-                                <p class="category">Here is a subtitle for this table</p>
-                            </div>
-                            <div class="content table-responsive table-full-width">
-                                <table class="table table-hover" id="table">
-                                    <thead>
-                                    <th data-field="Sentiment">Sentiment</th>
-                                    <th data-field="tweet">Tweet</th>
-                                    </thead>
-                                </table>
-
-                            </div>
-
-                            <!--<div class="header">
                                 <h4 class="title">Collected Tweets</h4>
                             </div>
                             <table class="table table-dark" id="table">
                                 <thead>
                                 <tr>
-                                    <th class="col-md-1" data-field="Sentiment">Sentiment</th>
-                                    <th class="col-md-11"data-field="tweet">Tweet</th>
+                                    <th class="col-md-8"data-field="tweet">Tweet</th>
+                                    <th class="col-md-1" data-field="Sentiment">NBSTS</th>
+                                    <th class="col-md-1" data-field="Sentiment">SVMSTS</th>
+                                    <th class="col-md-1" data-field="Sentiment">SVMSE</th>
+                                    <th class="col-md-1" data-field="Sentiment">NBSE</th>
                                 </tr>
                                 {% for item in tdata %}
                                 <tr>
-                                    <td>{{item[0]}}</td>
-                                    <td>{{item[1]}}</td>
-
+                                    {% for i in item %}
+                                    <td>{{i}}</td>
+                                    <!--<td>{{item[2]}}</td>-->
+                                    <!--<td>{{item[3]}}</td>-->
+                                    <!--<td>{{item[4]}}</td>-->
+                                    <!--<td>{{item[5]}}</td>-->
+                                    {% endfor %}
                                 </tr>
                                 {% endfor %}
                                 </thead>
-                            </table>-->
+                            </table>
 
 
                         <!--<h4 class="title">Collected Tweets</h4>

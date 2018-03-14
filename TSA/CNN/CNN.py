@@ -7,18 +7,10 @@ from sklearn.model_selection import train_test_split
 from TSA.CNN.data_handler import load_data
 
 
-
 def train_CNN():
     x, y, vocabulary, vocabulary_inv = load_data("TSA/datasets/SemEval/4A-English/", "SemEval.csv")
-    # print(x)
-    # print(y)
-    # print(x.shape)
-    # print(y.shape)
+
     X_train, X_test, y_train, y_test = train_test_split(x, y, test_size=0.2, random_state=42)
-    # print(X_train.shape)
-    # print(y_train.shape)
-    # print(X_test.shape)
-    # print(y_test.shape)
 
     sequence_length = x.shape[1]
     vocabulary_size = len(vocabulary_inv)
@@ -49,7 +41,7 @@ def train_CNN():
     concatenated_tensor = Concatenate(axis=1)([maxpool_0, maxpool_1, maxpool_2])
     flatten = Flatten()(concatenated_tensor)
     dropout = Dropout(drop)(flatten)
-    output = Dense(units=1, activation='softmax')(dropout) # Change units to 1
+    output = Dense(units=1, activation='softmax')(dropout)  # Change units to 1
 
     # this creates a model that includes
     model = Model(inputs=inputs, outputs=output)
