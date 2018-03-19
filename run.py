@@ -10,6 +10,6 @@ from TSA.TwitterMiner import TwitterMiner
 # NB.train_NB()
 # SVM.train_SVM()
 # Prediction.main()
-app.main()
-# CNN.train_CNN()
+# app.main()
+CNN.train_CNN()
 # TwitterMiner.main()

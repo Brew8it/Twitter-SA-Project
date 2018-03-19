@@ -12,6 +12,11 @@ def train_CNN():
     x, y, vocabulary, vocabulary_inv = load_data("TSA/datasets/SemEval/4A-English/", "SemEval.csv")
     # x, y, vocabulary, vocabulary_inv = load_data("TSA/datasets/STS/", "STS.csv")
 
+    import os
+
+    print("Path at terminal when executing this file")
+    print(os.getcwd() + "\n")
+
 
     X_train, X_test, y_train, y_test = train_test_split(x, y, test_size=0.2, random_state=42)
 
@@ -63,9 +68,9 @@ def train_CNN():
     with open('../../../TrainedModels/CNN_base_SemEval.json', 'w') as json_file:
         json_file.write(model_json)
 
-    model.save_weights('./../../TrainedModels/CNN_base_SemEval_w.h5')
+    model.save_weights('../../../TrainedModels/CNN_base_SemEval_w.h5')
 
     # with open('../../../TrainedModels/CNN_base_STS.json', 'w') as json_file:
     #     json_file.write(model_json)
     #
-    # model.save_weights('./../../TrainedModels/CNN_base_STS_w.h5')
+    # model.save_weights('../../../TrainedModels/CNN_base_STS_w.h5')
