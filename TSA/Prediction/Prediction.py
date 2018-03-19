@@ -46,7 +46,15 @@ class Prediction:
         NBSTS = self.pred_list[1]
         SVMSE = self.pred_list[2]
         SVMSTS = self.pred_list[3]
-        self.db_list = [list(e) for e in zip(list(self.twitterDF.tweet),NBSE, NBSTS, SVMSE, SVMSTS)]
+        ## until models are done
+
+        CNNSE = []
+        CNNSTS = []
+
+        for i in range(len(self.pred_list[0])):
+            CNNSTS.append(0)
+            CNNSE.append(0)
+        self.db_list = [list(e) for e in zip(list(self.twitterDF.tweet),NBSE, NBSTS, SVMSE, SVMSTS, CNNSE, CNNSTS)]
 
     def make_posneg_list(self, predlist):
         #pos, #neg # nodata
