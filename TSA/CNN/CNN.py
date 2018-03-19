@@ -9,7 +9,12 @@ from TSA.CNN.data_handler import load_data
 
 
 def train_CNN():
+
     x, y, vocabulary, vocabulary_inv = load_data("TSA/datasets/SemEval/4A-English/", "SemEval.csv")
+    # x, y, vocabulary, vocabulary_inv = load_data("TSA/datasets/STS/", "STS.csv")
+
+
+
     # print(x)
     # print(y)
     # print(x.shape)
@@ -63,3 +68,14 @@ def train_CNN():
     print("Training")
     model.fit(X_train, y_train, batch_size=batch_size, epochs=epochs, verbose=1, callbacks=[checkpoint],
               validation_data=(X_test, y_test))  # starts training
+
+    model_json = model.to_json()
+    with open('../../../TrainedModels/CNN_base_SemEval.json', 'w') as json_file:
+        json_file.write(model_json)
+
+    model.save_weights('./../../TrainedModels/CNN_base_SemEval_w.h5')
+
+    # with open('../../../TrainedModels/CNN_base_STS.json', 'w') as json_file:
+    #     json_file.write(model_json)
+    #
+    # model.save_weights('./../../TrainedModels/CNN_base_STS_w.h5')
