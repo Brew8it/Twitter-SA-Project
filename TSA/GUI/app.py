@@ -55,8 +55,5 @@ def dashboard():
 
 # start the server with the 'run()' method
 def main():
-    app.run(debug=True)
-
-
-if __name__ == '__main__':
-    main()
+    # for debug = debug=True
+    app.run()

@@ -11,9 +11,9 @@ from TSA.Preproc.Preproc import Preproc
 
 def train_NB():
     pp = Preproc()
-    # pp.loadCsv("TSA/datasets/SemEval/4A-English/", "SemEval.csv")
+    pp.loadCsv("TSA/datasets/SemEval/4A-English/", "SemEval.csv")
 
-    pp.loadCsv("TSA/datasets/STS/", "STS.csv")
+    # pp.loadCsv("TSA/datasets/STS/", "STS.csv")
 
     print("Data is loaded :: " + str(datetime.datetime.utcnow()))
 
@@ -42,7 +42,7 @@ def train_NB():
     # Print evaluation metrics
     print(metrics.classification_report(y_test, predicted, target_names=target_names))
 
-    #joblib.dump(nb_unigram_clf, "../../../TrainedModels/NB_base_SemEval.pkl")
+    joblib.dump(nb_unigram_clf, "../../../TrainedModels/NB_base_SemEval.pkl")
 
 
-    joblib.dump(nb_unigram_clf, "../../TrainedModels/NB_base_STS.pkl")
+    #joblib.dump(nb_unigram_clf, "../../TrainedModels/NB_base_STS.pkl")
