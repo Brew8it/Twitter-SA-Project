@@ -44,8 +44,14 @@ def load_data(path, file_name):
     max_length = get_max_tweet_sequence(df.tweet)
     df["tweet"] = df["tweet"].apply(lambda x: pad_tweet(x, max_length))
 
+    df['lable'] = df['lable'].apply(lambda d: [1, 0] if d == 1 else [0, 1])
+
+    y = df['lable'].tolist()
+    y = np.array(y)
+
     vocabulary, inverse_vocabulary = create_vocabulary(df.tweet)
 
     x = get_tweets_as_numbers(df.tweet, vocabulary)
 
-    return [x, df.lable, vocabulary, inverse_vocabulary]
+    # return [x, df.lable, vocabulary, inverse_vocabulary]
+    return [x, y, vocabulary, inverse_vocabulary]
