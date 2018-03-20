@@ -8,8 +8,8 @@ from TSA.TwitterMiner import TwitterMiner
 
 # Preproc.main()
 # NB.train_NB()
-# SVM.train_SVM()
+SVM.train_SVM()
 # Prediction.main()
 # app.main()
-CNN.train_CNN()
+# CNN.train_CNN()
 # TwitterMiner.main()

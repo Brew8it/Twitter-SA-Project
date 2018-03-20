@@ -1,6 +1,6 @@
 import datetime
 from sklearn.naive_bayes import MultinomialNB
-from sklearn.feature_extraction.text import CountVectorizer, TfidfTransformer
+from sklearn.feature_extraction.text import CountVectorizer
 from sklearn.pipeline import Pipeline
 from sklearn.model_selection import train_test_split
 from sklearn import metrics
@@ -11,9 +11,9 @@ from TSA.Preproc.Preproc import Preproc
 
 def train_NB():
     pp = Preproc()
-    pp.loadCsv("TSA/datasets/SemEval/4A-English/", "SemEval.csv")
+    # pp.loadCsv("TSA/datasets/SemEval/4A-English/", "SemEval.csv")
 
-    # Preproc.loadCsv("TSA/datasets/STS/", "STS.csv")
+    pp.loadCsv("TSA/datasets/STS/", "STS.csv")
 
     print("Data is loaded :: " + str(datetime.datetime.utcnow()))
 
@@ -31,7 +31,6 @@ def train_NB():
     print("Train the model :: " + str(datetime.datetime.utcnow()))
     # Train the model
     nb_unigram_clf = Pipeline([('vect', CountVectorizer()),
-                               ('tfidf', TfidfTransformer()),
                                ('clf', MultinomialNB())])
     nb_unigram_clf.fit(X_train, y_train)
 
@@ -43,7 +42,7 @@ def train_NB():
     # Print evaluation metrics
     print(metrics.classification_report(y_test, predicted, target_names=target_names))
 
-    joblib.dump(nb_unigram_clf, "../../../TrainedModels/NB_base_SemEval.pkl")
+    #joblib.dump(nb_unigram_clf, "../../../TrainedModels/NB_base_SemEval.pkl")
 
 
-    #joblib.dump(nb_unigram_clf, "../../../TrainedModels/NB_base_STS.pkl")
+    joblib.dump(nb_unigram_clf, "../../TrainedModels/NB_base_STS.pkl")
