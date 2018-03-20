@@ -46,7 +46,7 @@ def train_CNN():
     concatenated_tensor = Concatenate(axis=1)([maxpool_0, maxpool_1, maxpool_2])
     flatten = Flatten()(concatenated_tensor)
     dropout = Dropout(drop)(flatten)
-    output = Dense(units=2, activation='softmax')(dropout)  # Change units to 1
+    output = Dense(units=2, activation='softmax')(dropout)
 
     # this creates a model that includes
     model = Model(inputs=inputs, outputs=output)
