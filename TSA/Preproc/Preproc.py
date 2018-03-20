@@ -13,9 +13,6 @@ import numpy as np
 
 import unicodedata
 
-# python -m spacy download en
-# nlp = spacy.load('en', parse=False, tag=False, entity=False)
-
 pd.options.display.max_colwidth = 200
 
 stemmer = SnowballStemmer('english')
