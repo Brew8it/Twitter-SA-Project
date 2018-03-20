@@ -6,11 +6,19 @@ from keras.models import Model
 from sklearn.model_selection import train_test_split
 from TSA.CNN.data_handler import load_data
 
+from TSA.Preproc import Preproc
+
 
 def train_CNN():
 
-    x, y, vocabulary, vocabulary_inv = load_data("TSA/datasets/SemEval/4A-English/", "SemEval.csv")
-    # x, y, vocabulary, vocabulary_inv = load_data("TSA/datasets/STS/", "STS.csv")
+    # Load data
+    pp = Preproc.Preproc()
+    pp.loadCsv("TSA/datasets/SemEval/4A-English/", "SemEval.csv")
+    # pp.loadCsv("TSA/datasets/SemEval/4A-English/", "SemEval.csv")
+    pp.clean_data()
+    df = pp.get_twitter_df()
+
+    x, y, vocabulary, vocabulary_inv = load_data(df)
 
 
     X_train, X_test, y_train, y_test = train_test_split(x, y, test_size=0.2, random_state=42)

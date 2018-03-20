@@ -25,6 +25,7 @@ def main_menu():
     print("2 Train SVM")
     print("3 Train CNN")
     print("4 start webserver for GUI")
+    print("5 Test Pred")
     print("0 Exit")
     choise = input()
     exec_menu(choise)
@@ -38,6 +39,8 @@ def exec_menu(choise):
         CNN.train_CNN()
     elif choise == "4":
         gui()
+    elif choise == "5":
+        Prediction.main()
 
 def gui():
     app.main()

@@ -32,13 +32,19 @@ def create_vocabulary(tweets):
     return [vocabulary, inverse_vocabulary]
 
 
-def load_data(path, file_name):
-    # Load data
-    pp = Preproc.Preproc()
-    pp.loadCsv(path, file_name)
-    pp.clean_data()
-    df = pp.get_twitter_df()
+def pred_load_data(df):
+    # Convert tweet to list of words and apply padding
+    df["tweet"] = df["tweet"].apply(lambda x: x.split(" "))
+    max_length = get_max_tweet_sequence(df.tweet)
+    df["tweet"] = df["tweet"].apply(lambda x: pad_tweet(x, max_length))
+    vocabulary, inverse_vocabulary = create_vocabulary(df.tweet)
+    x = get_tweets_as_numbers(df.tweet, vocabulary)
+    return x
 
+
+
+
+def load_data(df):
     # Convert tweet to list of words and apply padding
     df["tweet"] = df["tweet"].apply(lambda x: x.split(" "))
     max_length = get_max_tweet_sequence(df.tweet)
