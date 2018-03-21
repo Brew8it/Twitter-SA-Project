@@ -1,6 +1,7 @@
 import numpy
 from sklearn.externals import joblib
 import pandas as pd
+import numpy as np
 
 from TSA.TwitterMiner import TwitterMiner
 from TSA.Preproc import Preproc
@@ -72,15 +73,15 @@ class Prediction:
         NBSTS = self.pred_list[1]
         SVMSE = self.pred_list[2]
         SVMSTS = self.pred_list[3]
-        # CNNSE = self.pred_list[4]
+        CNNSE = self.pred_list[4]
         ## until models are done
 
-        CNNSE = []
+        # CNNSE = []
         CNNSTS = []
 
         for i in range(len(self.pred_list[0])):
             CNNSTS.append(0)
-            CNNSE.append(0)
+          #  CNNSE.append(0)
         self.db_list = [list(e) for e in zip(list(self.twitterDF.tweet), NBSE, NBSTS, SVMSE, SVMSTS, CNNSE, CNNSTS)]
 
     def make_posneg_list(self, predlist):
@@ -97,13 +98,25 @@ class Prediction:
             # Convert to int list so it will fit into DB.
             self.pred_list.append([int(i) for i in pred])
 
+    def cnn_make_predict_lable(self, pred):
+        labels = [0, 1]
+        arglist = []
+        # Swap from [0.423, 0.677] -> lable = 0
+        for p in pred:
+            arglist.append(labels[np.argmax(p)])
+        return arglist
+
+
+
+
     def cnn_predict(self, text):
         for clf in self.cnnlist:
+            print(text)
             pred = clf.predict(text)
-            print(pred)
-            self.make_posneg_list(pred)
+            pred_remade = self.cnn_make_predict_lable(pred)
+            self.make_posneg_list(pred_remade)
             # Convert to int list so it will fit into DB.
-            # self.pred_list.append([int(i) for i in pred])
+            self.pred_list.append([int(i) for i in pred_remade])
 
     def get_twitter_data(self, name, numTweets):
         self.twitterDF = self.twitterMiner.collect_tweets_from_user_feed(name, numTweets)
@@ -120,5 +133,5 @@ class Prediction:
 def main():
     # add support for input username and number of tweets.
     prediction = Prediction()
-    data = prediction.db_make_predictions("realdonaldtrump", "10")
+    data = prediction.db_make_predictions("realdonaldtrump", "15")
     print(data)

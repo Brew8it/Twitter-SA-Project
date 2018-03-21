@@ -35,7 +35,9 @@ def create_vocabulary(tweets):
 def pred_load_data(df):
     # Convert tweet to list of words and apply padding
     df["tweet"] = df["tweet"].apply(lambda x: x.split(" "))
-    max_length = get_max_tweet_sequence(df.tweet)
+    # set max length to a fixed size..
+    # max_length = get_max_tweet_sequence(df.tweet)
+    max_length = 64
     df["tweet"] = df["tweet"].apply(lambda x: pad_tweet(x, max_length))
     vocabulary, inverse_vocabulary = create_vocabulary(df.tweet)
     x = get_tweets_as_numbers(df.tweet, vocabulary)
@@ -47,7 +49,8 @@ def pred_load_data(df):
 def load_data(df):
     # Convert tweet to list of words and apply padding
     df["tweet"] = df["tweet"].apply(lambda x: x.split(" "))
-    max_length = get_max_tweet_sequence(df.tweet)
+    # max_length = get_max_tweet_sequence(df.tweet)
+    max_length = 64
     df["tweet"] = df["tweet"].apply(lambda x: pad_tweet(x, max_length))
 
     df['lable'] = df['lable'].apply(lambda d: [1, 0] if d == 1 else [0, 1])
