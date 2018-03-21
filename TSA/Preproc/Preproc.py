@@ -129,7 +129,7 @@ class Preproc(object):
 
 def main():
     test = Preproc()
-    test.loadCsv("TSA/datasets/STS/", "STS_test.csv")
+    test.loadCsv("TSA/datasets/STS/", "STS.csv")
     #test.loadCsv("TSA/datasets/SemEval/4A-English/", "SemEval.csv")
 
     test.clean_data(save_to_csv=True)
