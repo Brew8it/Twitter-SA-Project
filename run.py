@@ -5,7 +5,6 @@ from TSA.Prediction import Prediction
 from TSA.GUI import app
 from TSA.CNN import CNN
 from TSA.TwitterMiner import TwitterMiner
-from TSA.NB import NB_gridsearch
 
 import sys, os
 

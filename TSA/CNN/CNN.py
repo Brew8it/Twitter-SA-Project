@@ -13,8 +13,8 @@ def train_CNN():
 
     # Load data
     pp = Preproc.Preproc()
-    pp.loadCsv("TSA/datasets/SemEval/4A-English/", "SemEval.csv")
     # pp.loadCsv("TSA/datasets/SemEval/4A-English/", "SemEval.csv")
+    pp.loadCsv("TSA/datasets/STS/", "STS.csv")
     pp.clean_data()
     df = pp.get_twitter_df()
 
@@ -32,7 +32,7 @@ def train_CNN():
     num_filters = 128
     drop = 0.5
 
-    epochs = 10
+    epochs = 5
     batch_size = 64
 
     print("Building model")
@@ -70,12 +70,12 @@ def train_CNN():
               validation_data=(X_test, y_test))  # starts training
 
     model_json = model.to_json()
-    with open('../../../TrainedModels/CNN_base_SemEval.json', 'w') as json_file:
-        json_file.write(model_json)
-
-    model.save_weights('../../../TrainedModels/CNN_base_SemEval_w.h5')
-
-    # with open('../../../TrainedModels/CNN_base_STS.json', 'w') as json_file:
+    # with open('../../../TrainedModels/CNN_base_SemEval.json', 'w') as json_file:
     #     json_file.write(model_json)
     #
-    # model.save_weights('../../../TrainedModels/CNN_base_STS_w.h5')
+    # model.save_weights('../../../TrainedModels/CNN_base_SemEval_w.h5')
+
+    with open('../../TrainedModels/CNN_base_STS.json', 'w') as json_file:
+        json_file.write(model_json)
+
+    model.save_weights('../../TrainedModels/CNN_base_STS_w.h5')

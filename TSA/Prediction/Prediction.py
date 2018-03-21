@@ -17,7 +17,7 @@ class Prediction:
     modelnames = ["TSA/TrainedModels/NB_base_SemEval.pkl", "TSA/TrainedModels/NB_base_STS.pkl",
                   "TSA/TrainedModels/SVM_base_SemEval.pkl",
                   "TSA/TrainedModels/SVM_base_STS.pkl"]
-    cnnmodels = [["TSA/TrainedModels/CNN_base_SemEval.json", "TSA/TrainedModels/CNN_base_SemEval_w.h5"]]
+    cnnmodels = [["TSA/TrainedModels/CNN_base_SemEval.json", "TSA/TrainedModels/CNN_base_SemEval_w.h5"], ["TSA/TrainedModels/CNN_base_STS.json", "TSA/TrainedModels/CNN_base_STS_w.h5"]]
 
     def __init__(self):
         self.clflist = []
@@ -74,14 +74,15 @@ class Prediction:
         SVMSE = self.pred_list[2]
         SVMSTS = self.pred_list[3]
         CNNSE = self.pred_list[4]
+        CNNSTS = self.pred_list[5]
         ## until models are done
 
         # CNNSE = []
-        CNNSTS = []
-
-        for i in range(len(self.pred_list[0])):
-            CNNSTS.append(0)
-          #  CNNSE.append(0)
+        # CNNSTS = []
+        #
+        # for i in range(len(self.pred_list[0])):
+        #     CNNSTS.append(0)
+        #   #  CNNSE.append(0)
         self.db_list = [list(e) for e in zip(list(self.twitterDF.tweet), NBSE, NBSTS, SVMSE, SVMSTS, CNNSE, CNNSTS)]
 
     def make_posneg_list(self, predlist):
