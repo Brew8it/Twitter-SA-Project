@@ -15,29 +15,22 @@ from TSA.Preproc.Preproc import Preproc
 from time import time
 
 
-
-
 pp = Preproc()
-pp.loadCsv("../datasets/SemEval/4A-English/", "SemEval.csv")
+pp.loadCsv("../datasets/SemEval/4A-English/", "preproc_SemEval.csv")
 
-# pp.loadCsv("TSA/datasets/STS/", "STS.csv")
-
-print("Data is loaded :: " + str(datetime.datetime.utcnow()))
-
-pp.clean_data()
 df = pp.get_twitter_df()
-
-print("Data is cleand time for splitting :: " + str(datetime.datetime.utcnow()))
 
 X_train, X_test, y_train, y_test = train_test_split(df.tweet, df.lable, test_size=0.2, random_state=0)
 
-# print(X_train)
+# print(X_train.shape)
 
 target_names = ['Positive', 'Negative']
 
+# SemEval vocab size 10272
+
 pipeline = Pipeline([
     ('vect', CountVectorizer()),
-    #('kbest', SelectKBest(chi2)),
+    ('kbest', SelectKBest(chi2)),
     ('tfidf', TfidfTransformer()),
     ('clf', MultinomialNB()),
 ])
@@ -47,6 +40,7 @@ parameters = {
     'vect__ngram_range': ((1, 1), (1, 2), (1, 3)),  # unigrams or bigrams
     'tfidf__use_idf': (True, False),
     'tfidf__norm': (None, 'l1', 'l2'),
+    'kbest__k': (3000, 6000, 8000, 'all'),
 }
 
 if __name__ == "__main__":
