@@ -26,6 +26,7 @@ def main_menu():
     print("3 Train CNN")
     print("4 start webserver for GUI")
     print("5 Test Pred")
+    print("6 Save preproc to csv")
     print("0 Exit")
     choise = input()
     exec_menu(choise)
@@ -41,6 +42,8 @@ def exec_menu(choise):
         gui()
     elif choise == "5":
         Prediction.main()
+    elif choise == "6":
+        Preproc.main()
 
 def gui():
     app.main()

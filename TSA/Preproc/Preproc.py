@@ -28,11 +28,13 @@ cont_re = re.compile('(%s)' % '|'.join(cont_dict.keys()))
 class Preproc(object):
     def __init__(self):
         self.df = pd.DataFrame
+        self.filename = ""
 
     def loadCsv(self, path, name):
         os.chdir(path)
         self.df = pd.read_csv(name, sep=",").dropna()
         self.df.columns = ["num", "lable", "tweet"]
+        self.filename = name
 
     def loadOwnDataFrame(self, dataframe):
         self.df = dataframe.dropna()
@@ -47,7 +49,7 @@ class Preproc(object):
                    remove_mentions=True,
                    remove_hashtag=True, remove_extra_whitespace=True, tokenize=True, stemming=True,
                    remake_document=True,
-                   expand_contractions=True):
+                   expand_contractions=True, save_to_csv=False):
         if html_strpping:
             self.remove_html_encode()
         if to_lower:
@@ -72,6 +74,8 @@ class Preproc(object):
             self.remove_stopwords()
         if remake_document:
             self.remake_tweets()
+        if save_to_csv:
+            self.save_preproc_data_to_csv()
 
     def get_twitter_df(self):
         # return self.df[['lable', "tweet"]]
@@ -115,21 +119,20 @@ class Preproc(object):
     def remake_tweets(self):
         self.df["tweet"] = self.df["tweet"].apply(lambda x: ' '.join(x))
 
+    def save_preproc_data_to_csv(self):
+        csv_name = 'preproc_' + self.filename
+        header = ["lable", "tweet"]
+        self.df.to_csv(csv_name, columns=header)
+
     # for testing
 
 
 def main():
     test = Preproc()
-    # test.loadCsv("../datasets/STS/", "STS_test.csv")
-    # test.loadCsv("../datasets/SemEval/4A-English/", "SemEval.csv")
+    test.loadCsv("TSA/datasets/STS/", "STS_test.csv")
+    #test.loadCsv("TSA/datasets/SemEval/4A-English/", "SemEval.csv")
 
-    df = pd.DataFrame(
-        np.array([[1, "you don\'t need didn\'t"], [2, "This is a test tweet with you don\'t need didn\'t"]]))
-    df.columns = ["lable", "tweet"]
-    test.loadOwnDataFrame(df)
-    test.clean_data()
-    df = test.get_twitter_df()
-    print(df)
+    test.clean_data(save_to_csv=True)
 
     """
     test = Preproc()
