@@ -34,8 +34,6 @@ def home():
 def dashboard():
     sentiment_result = get_posneg()
 
-    print(sentiment_result)
-
     series = {
         'NBSE': {'series': sentiment_result["NBSE"]},
         'NBSTS': {'series': sentiment_result["NBSTS"]},
@@ -47,8 +45,6 @@ def dashboard():
 
     #data = [['Perhaps at no time in history have the business fundamentals of U.S. companies been better than they are today!Perhaps at no time in history have the business fundamentals of U.S. companies been better than they are today!', 1, 1, 1, 1], ['Perhaps at no time in history have the business fundamentals of U.S. companies been better than they are today!', 1, 1, 1, 1]]
     data = get_tweets_records()
-
-    print(data)
 
     return render_template('dashboard.html', **series, tdata=data)
 

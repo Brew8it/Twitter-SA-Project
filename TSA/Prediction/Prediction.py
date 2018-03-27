@@ -56,6 +56,7 @@ class Prediction:
         self.make_cnn_preproc()
         # make cnn_pred
         self.cnn_predict(self.clean_DF_cnn)
+        self.make_average_prediction()
         self.make_db_list()
         return self.db_list
 
@@ -66,6 +67,18 @@ class Prediction:
         self.nb_svm_predict(self.cleanTwitterDF.tweet)
         return self.numberOfposNeg
 
+    def make_average_prediction(self):
+        sum = []
+        for i in range(len(self.pred_list[0])):
+            _sum = 0
+            for j in range(len(self.pred_list)):
+                _sum += self.pred_list[j][i]
+            avg = _sum/len(self.pred_list)
+            sum.append(float("{0:.2f}".format(avg)))
+        self.pred_list.append(sum)
+
+
+
     def make_db_list(self):
         # change this dependeing on how many models!!
         # NBSE, NBSTS, SVMSE, SVMSTS
@@ -75,6 +88,7 @@ class Prediction:
         SVMSTS = self.pred_list[3]
         CNNSE = self.pred_list[4]
         CNNSTS = self.pred_list[5]
+        AVG = self.pred_list[6]
         ## until models are done
 
         # CNNSE = []
@@ -83,7 +97,7 @@ class Prediction:
         # for i in range(len(self.pred_list[0])):
         #     CNNSTS.append(0)
         #   #  CNNSE.append(0)
-        self.db_list = [list(e) for e in zip(list(self.twitterDF.tweet), NBSE, NBSTS, SVMSE, SVMSTS, CNNSE, CNNSTS)]
+        self.db_list = [list(e) for e in zip(list(self.twitterDF.tweet), NBSE, NBSTS, SVMSE, SVMSTS, CNNSE, CNNSTS, AVG)]
 
     def make_posneg_list(self, predlist):
         # pos, #neg # nodata
@@ -105,6 +119,7 @@ class Prediction:
         # Swap from [0.423, 0.677] -> lable = 0
         for p in pred:
             arglist.append(labels[np.argmax(p)])
+
         return arglist
 
 
@@ -112,7 +127,6 @@ class Prediction:
 
     def cnn_predict(self, text):
         for clf in self.cnnlist:
-            print(text)
             pred = clf.predict(text)
             pred_remade = self.cnn_make_predict_lable(pred)
             self.make_posneg_list(pred_remade)
@@ -134,5 +148,5 @@ class Prediction:
 def main():
     # add support for input username and number of tweets.
     prediction = Prediction()
-    data = prediction.db_make_predictions("realdonaldtrump", "15")
+    data = prediction.db_make_predictions("realdonaldtrump", "2")
     print(data)

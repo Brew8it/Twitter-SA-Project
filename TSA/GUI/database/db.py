@@ -7,14 +7,14 @@ def insert_search_with_tweets(uname, numOfTweets, predictedTweets):
         # Insert search record
         cur.execute("INSERT INTO search (uname, numOfTweets) VALUES (?, ?)", (uname, numOfTweets))
         search_id = cur.lastrowid
-        print(predictedTweets)
+        # print(predictedTweets)
         # Insert tweet record
         for predictedTweet in predictedTweets:
             cur.execute(
-                "INSERT INTO tweets (tweet, NBSE, NBSTS, SVMSE, SVMSTS, CNNSE, CNNSTS, search_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?)",
+                "INSERT INTO tweets (tweet, NBSE, NBSTS, SVMSE, SVMSTS, CNNSE, CNNSTS, AVG, search_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)",
                 (predictedTweet[0], predictedTweet[1], predictedTweet[2], predictedTweet[3], predictedTweet[4],
                  predictedTweet[5],
-                 predictedTweet[6], search_id))
+                 predictedTweet[6], predictedTweet[7], search_id))
         con.commit()
 
 
@@ -28,7 +28,7 @@ def get_search_records():
 def get_tweets_records():
     with sql.connect("TSA/GUI/database/database.db") as con:
         cur = con.cursor()
-        result = cur.execute("SELECT tweet, NBSE, NBSTS, SVMSE, SVMSTS, CNNSE, CNNSTS FROM tweets")
+        result = cur.execute("SELECT tweet, NBSE, NBSTS, SVMSE, SVMSTS, CNNSE, CNNSTS, AVG FROM tweets")
         return result.fetchall()
 
 
