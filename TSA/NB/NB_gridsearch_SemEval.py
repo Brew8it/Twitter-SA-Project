@@ -1,5 +1,6 @@
 import datetime
 
+import os
 from sklearn.feature_selection import SelectKBest, chi2
 from sklearn.naive_bayes import MultinomialNB
 from sklearn.feature_extraction.text import CountVectorizer, TfidfTransformer
@@ -7,13 +8,11 @@ from sklearn.pipeline import Pipeline
 from sklearn.model_selection import train_test_split
 from sklearn import metrics
 from sklearn.externals import joblib
-
 from sklearn.model_selection import GridSearchCV
-
 from TSA.Preproc.Preproc import Preproc
-
 from time import time
-
+from datetime import datetime
+import sys
 
 pp = Preproc()
 pp.loadCsv("../datasets/SemEval/4A-English/", "preproc_SemEval.csv")
@@ -44,9 +43,23 @@ parameters = {
 }
 
 if __name__ == "__main__":
+
+    log_name = "best_params_nb_se.log"
+    old_stdout = sys.stdout
+
+    if os.path.isfile("best_params_nb_se.log"):
+        file_permission = "w"
+    else:
+        file_permission = "a"
+
+    print(file_permission)
+
+    log_file = open("../../../NB/best_params_nb_se.log", file_permission)
+    sys.stdout = log_file
+
     grid_search = GridSearchCV(pipeline, parameters, n_jobs=-1, verbose=1)
 
-    print("Performing grid search...")
+    print("\nPerforming grid search at " + str(datetime.utcnow()))
     print("pipeline:", [name for name, _ in pipeline.steps])
     print("parameters:")
     print(parameters)
@@ -62,3 +75,8 @@ if __name__ == "__main__":
     best_parameters = grid_search.best_estimator_.get_params()
     for param_name in sorted(parameters.keys()):
         print("\t%s: %r" % (param_name, best_parameters[param_name]))
+    print('\n')
+    sys.stdout = old_stdout
+    log_file.close()
+
+
