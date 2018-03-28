@@ -26,7 +26,7 @@ target_names = ['Positive', 'Negative']
 pipeline = Pipeline([
     ('vect', CountVectorizer(max_df=0.5, ngram_range=(1, 3))),
     ('kbest', SelectKBest(chi2)),
-    ('tfidf', TfidfTransformer(norm='none', use_idf=True)),
+    ('tfidf', TfidfTransformer(norm=None, use_idf=True)),
     ('clf', SGDClassifier()),
 ])
 
