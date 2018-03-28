@@ -1,0 +1,17 @@
+
+Performing grid search at 2018-03-28 06:33:37.204827
+pipeline: ['vect', 'kbest', 'tfidf', 'clf']
+parameters:
+{'tfidf__norm': (None, 'l1', 'l2'), 'vect__ngram_range': ((1, 1), (1, 2), (1, 3)), 'kbest__k': (3000, 6000, 8000, 'all'), 'tfidf__use_idf': (True, False), 'vect__max_df': (0.5, 0.75, 1.0)}
+Fitting 3 folds for each of 216 candidates, totalling 648 fits
+done in 63.982s
+
+Best score: 0.846
+Best parameters set:
+	kbest__k: 8000
+	tfidf__norm: None
+	tfidf__use_idf: False
+	vect__max_df: 0.5
+	vect__ngram_range: (1, 1)
+
+

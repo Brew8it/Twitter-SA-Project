@@ -28,7 +28,7 @@ target_names = ['Positive', 'Negative']
 
 pipeline = Pipeline([
     ('vect', CountVectorizer()),
-    ('kbest', SelectKBest(chi2)),
+#    ('kbest', SelectKBest(chi2)),
     ('tfidf', TfidfTransformer()),
     ('clf', MultinomialNB()),
 ])
@@ -38,7 +38,7 @@ parameters = {
     'vect__ngram_range': ((1, 1), (1, 2), (1, 3)),  # unigrams or bigrams
     'tfidf__use_idf': (True, False),
     'tfidf__norm': (None, 'l1', 'l2'),
-    'kbest__k': (30000, 50000, 100000, 130000, 'all'),
+#    'kbest__k': (30000, 50000, 100000, 130000, 'all'),
 }
 
 if __name__ == "__main__":
