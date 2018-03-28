@@ -12,3 +12,14 @@ Best parameters set:
 	tfidf__use_idf: True
 	vect__max_df: 0.5
 	vect__ngram_range: (1, 3)
+
+Performing grid search at 2018-03-28 11:35:48.702751
+pipeline: ['vect', 'kbest', 'tfidf', 'clf']
+parameters:
+{'kbest__k': (30000, 50000, 100000, 130000, 'all')}
+Fitting 3 folds for each of 5 candidates, totalling 15 fits
+done in 579.396s
+
+Best score: 0.790
+Best parameters set:
+	kbest__k: 'all'
