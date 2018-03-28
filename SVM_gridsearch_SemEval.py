@@ -26,7 +26,7 @@ target_names = ['Positive', 'Negative']
 
 pipeline = Pipeline([
     ('vect', CountVectorizer(max_df=0.75, ngram_range=(1,2))),
-    ('kbest', SelectKBest(chi2)),
+    ('kbest', SelectKBest(chi2, k='all')),
     ('tfidf', TfidfTransformer(norm='l2', use_idf=True)),
     ('clf', SGDClassifier()),
 ])
@@ -36,10 +36,10 @@ parameters = {
     #'vect__ngram_range': ((1, 1), (1, 2), (1, 3)),  # unigrams or bigrams
     #'tfidf__use_idf': (True, False),
     #'tfidf__norm': (None, 'l1', 'l2'),
-    'kbest__k': (3000, 6000, 8000, 'all'),
-    #'clf__alpha': (1e-4, 1e-3, 1e-2, 1e-1, 1e0, 1e1),
-    #'clf__max_iter': (500, 1000, 1500),
-    #'clf__penalty': ('l2', 'l1', 'elasticnet'),
+    #'kbest__k': (3000, 6000, 8000, 'all'),
+    'clf__alpha': (1e-4, 1e-3, 1e-2, 1e-1, 1e0, 1e1),
+    'clf__max_iter': (500, 1000, 1500),
+    'clf__penalty': ('l2', 'l1', 'elasticnet'),
 }
 
 if __name__ == "__main__":
