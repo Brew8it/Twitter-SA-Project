@@ -14,8 +14,8 @@ def train_CNN():
     # Load data
     pp = Preproc.Preproc()
     # pp.loadCsv("TSA/datasets/SemEval/4A-English/", "SemEval.csv")
-    pp.loadCsv("TSA/datasets/STS/", "STS.csv")
-    pp.clean_data()
+    pp.loadCsv("TSA/datasets/STS/", "preproc_STS.csv")
+    #pp.clean_data()
     df = pp.get_twitter_df()
 
     x, y, vocabulary, vocabulary_inv = load_data(df)
@@ -32,7 +32,7 @@ def train_CNN():
     num_filters = 128
     drop = 0.5
 
-    epochs = 5
+    epochs = 3
     batch_size = 64
 
     print("Building model")
