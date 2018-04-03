@@ -23,3 +23,16 @@ done in 579.396s
 Best score: 0.790
 Best parameters set:
 	kbest__k: 'all'
+
+Performing grid search at 2018-04-03 06:51:09.424943
+pipeline: ['vect', 'kbest', 'tfidf', 'clf']
+parameters:
+{'clf__alpha': (0.0001, 0.001, 0.01, 0.1, 1.0, 10.0), 'clf__penalty': ('l2', 'l1', 'elasticnet'), 'clf__max_iter': (500, 1000, 1500)}
+Fitting 3 folds for each of 54 candidates, totalling 162 fits
+done in 13778.892s
+
+Best score: 0.799
+Best parameters set:
+	clf__alpha: 0.001
+	clf__max_iter: 1500
+	clf__penalty: 'l2'
