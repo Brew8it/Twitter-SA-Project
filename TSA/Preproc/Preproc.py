@@ -129,10 +129,18 @@ class Preproc(object):
 
 def main():
     test = Preproc()
-    test.loadCsv("TSA/datasets/STS/", "STS.csv")
+    #test.loadCsv("TSA/datasets/STS/", "STS.csv")
     #test.loadCsv("TSA/datasets/SemEval/4A-English/", "SemEval.csv")
 
-    test.clean_data(save_to_csv=True)
+    #test.clean_data(save_to_csv=True)
+
+    df = pd.DataFrame(np.array([[1, "#nice"]]))
+    df.columns = ["lable", "tweet"]
+    test.loadOwnDataFrame(df)
+    test.clean_data()
+    df = test.get_twitter_df()
+    print(df)
+
 
     """
     test = Preproc()
