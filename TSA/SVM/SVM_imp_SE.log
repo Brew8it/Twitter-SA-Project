@@ -1,0 +1,11 @@
+Train the model :: 2018-04-10 12:01:35.189906
+Testing the model :: 2018-04-10 12:01:39.251475
+
+Performing SVM_SemEval testing at 2018-04-10 12:01:39.324477
+             precision    recall  f1-score   support
+
+   Positive       0.87      0.64      0.74       618
+   Negative       0.86      0.96      0.91      1440
+
+avg / total       0.86      0.86      0.86      2058
+

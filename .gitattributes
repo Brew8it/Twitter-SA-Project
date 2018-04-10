@@ -2,3 +2,6 @@
 *.so filter=lfs diff=lfs merge=lfs -text
 _pywrap_tensorflow_internal.so filter=lfs diff=lfs merge=lfs -text
 CNN_base_STS_w.h5 filter=lfs diff=lfs merge=lfs -text
+SVM_imp_STS.pkl filter=lfs diff=lfs merge=lfs -text
+SVM_imp_SemEval.pkl filter=lfs diff=lfs merge=lfs -text
+NB_imp_STS.pkl filter=lfs diff=lfs merge=lfs -text
