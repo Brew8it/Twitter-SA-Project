@@ -25,7 +25,6 @@ def clean_text(filepath, filename):
     pp = Preproc.Preproc()
     pp.loadCsv(filepath, filename)
     pp.remove_html_encode()
-    # return dataframe
     return pp.get_twitter_df()
 
 
@@ -36,6 +35,7 @@ def swn_classifier(tweet):
     sentinized_tweet = sent_tokenize(tweet)
 
     for sentence in sentinized_tweet:
+        # Part of Speach tag
         tagged_tweet = pos_tag(word_tokenize(sentence))
 
         for word, tag in tagged_tweet:
@@ -48,6 +48,7 @@ def swn_classifier(tweet):
                 continue
 
             synset = wn.synsets(lemma, pos=wn_tag)
+            # If not a synonym skip this word.
             if not synset:
                 continue
 
