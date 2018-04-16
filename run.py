@@ -11,14 +11,6 @@ from TSA.SVM import SVM_improved_SE, SVM_improved_STS
 import sys, os
 
 
-# Preproc.main()
-# NB.train_NB()
-# SVM.train_SVM()
-# Prediction.main()
-# app.main()
-# app.main()
-# CNN.train_CNN()
-# TwitterMiner.main()
 
 
 def main_menu():

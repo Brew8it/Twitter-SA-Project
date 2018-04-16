@@ -8,6 +8,7 @@ from TSA.GUI.database.db import *
 # create the application object
 app = Flask(__name__)
 
+prediction = None
 
 # use decorators to link the function to a url
 @app.route('/', methods=["GET", "POST"])
@@ -19,7 +20,6 @@ def home():
         numberOfTweets = request.form['numberOfTweets']
 
         clear_searches()  # Clear recent search
-        prediction = Prediction.Prediction()
         predicted_tweets = prediction.db_make_predictions(username, numberOfTweets)
         insert_search_with_tweets(username, numberOfTweets, predicted_tweets)
 
@@ -52,4 +52,7 @@ def dashboard():
 # start the server with the 'run()' method
 def main():
     # for debug = debug=True
+
+    global prediction
+    prediction = Prediction.Prediction()
     app.run()

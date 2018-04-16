@@ -16,7 +16,7 @@ from TSA.CNN import data_handler
 class Prediction:
     modelnames = ["TSA/TrainedModels/NB_imp_SemEval.pkl", "TSA/TrainedModels/NB_imp_STS.pkl",
                   "TSA/TrainedModels/SVM_imp_SemEval.pkl",
-                  "TSA/TrainedModels/SVM_impl_STS.pkl"]
+                  "TSA/TrainedModels/SVM_imp_STS.pkl"]
     cnnmodels = [["TSA/TrainedModels/CNN_base_SemEval.json", "TSA/TrainedModels/CNN_base_SemEval_w.h5"], ["TSA/TrainedModels/CNN_base_STS.json", "TSA/TrainedModels/CNN_base_STS_w.h5"]]
 
     def __init__(self):
