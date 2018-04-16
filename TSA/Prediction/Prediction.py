@@ -14,9 +14,9 @@ from TSA.CNN import data_handler
 
 
 class Prediction:
-    modelnames = ["TSA/TrainedModels/NB_imp_SemEval.pkl", "TSA/TrainedModels/NB_imp_STS.pkl",
-                  "TSA/TrainedModels/SVM_imp_SemEval.pkl",
-                  "TSA/TrainedModels/SVM_imp_STS.pkl"]
+    modelnames = ["TSA/TrainedModels/NB_base_SemEval.pkl", "TSA/TrainedModels/NB_base_STS.pkl",
+                  "TSA/TrainedModels/SVM_base_SemEval.pkl",
+                  "TSA/TrainedModels/SVM_base_STS.pkl"]
     cnnmodels = [["TSA/TrainedModels/CNN_base_SemEval.json", "TSA/TrainedModels/CNN_base_SemEval_w.h5"], ["TSA/TrainedModels/CNN_base_STS.json", "TSA/TrainedModels/CNN_base_STS_w.h5"]]
 
     def __init__(self):
@@ -47,6 +47,12 @@ class Prediction:
             # and weight your nodes with your saved values
             model.load_weights(clf[1])
             self.cnnlist.append(model)
+
+    def clear_lists(self):
+        self.numberOfposNeg = []
+        self.pred_list = []
+        self.db_list = []
+        self.clean_DF_cnn = []
 
     def db_make_predictions(self, name, numTweets):
         self.get_twitter_data(name, numTweets)

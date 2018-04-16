@@ -223,7 +223,9 @@
                                 {% for item in tdata %}
                                 <tr>
                                     {% for i in item %}
-                                        {% if i == 1 %}
+                                        {% if loop.index == 8%}
+                                        <td>{{i}}</td>
+                                        {% elif i == 1 %}
                                         <td class="text-info">Positive</td>
                                         {% elif i == 0 %}
                                         <td class="text-danger">Negative</td>

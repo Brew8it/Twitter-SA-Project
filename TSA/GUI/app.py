@@ -14,6 +14,7 @@ prediction = None
 @app.route('/', methods=["GET", "POST"])
 def home():
     tdata = ["test", "test2"]
+    global prediction
 
     if request.method == "POST":
         username = request.form['username']
@@ -21,6 +22,8 @@ def home():
 
         clear_searches()  # Clear recent search
         predicted_tweets = prediction.db_make_predictions(username, numberOfTweets)
+        ## to clear list between searches.
+        prediction.clear_lists()
         insert_search_with_tweets(username, numberOfTweets, predicted_tweets)
 
         return redirect(url_for('dashboard'))
@@ -56,3 +59,4 @@ def main():
     global prediction
     prediction = Prediction.Prediction()
     app.run()
+
