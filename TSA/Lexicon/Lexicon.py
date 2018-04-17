@@ -35,6 +35,7 @@ def swn_classifier(tweet):
     sentinized_tweet = sent_tokenize(tweet)
 
     for sentence in sentinized_tweet:
+        #print(sentence)
         # Part of Speach tag
         tagged_tweet = pos_tag(word_tokenize(sentence))
 
@@ -55,6 +56,9 @@ def swn_classifier(tweet):
             synset = synset[0]
             swn_synset = swn.senti_synset(synset.name())
 
+            #print(synset)
+            #print(swn_synset)
+
             sentiment += swn_synset.pos_score() - swn_synset.neg_score()
             tokens_count += 1
 
@@ -71,16 +75,12 @@ def swn_classifier(tweet):
 
 def main():
     # for STS dataset
-    # df = clean_text("../datasets/STS/", "STS.csv")
+    # df = clean_text("TSA/datasets/STS/", "STS.csv")
 
     # for SemEval dataset
-    df = clean_text("../datasets/SemEval/4A-English/", "SemEval.csv")
+    df = clean_text("TSA/datasets/SemEval/4A-English/", "SemEval.csv")
 
     # split data into test 80% train, 20%
     X_train, X_test, y_train, y_test = train_test_split(df.tweet, df.lable, test_size=0.2, random_state=0)
     pred_y = [swn_classifier(tweet) for tweet in X_test]
     print(accuracy_score(y_test, pred_y))
-
-
-if __name__ == '__main__':
-    main()
