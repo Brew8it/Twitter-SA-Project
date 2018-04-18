@@ -1,6 +1,6 @@
 from keras.layers import Input, Dense, Embedding, Conv2D, MaxPool2D
 from keras.layers import Reshape, Flatten, Dropout, Concatenate
-from keras.callbacks import ModelCheckpoint
+from keras.callbacks import ModelCheckpoint, EarlyStopping
 from keras.optimizers import Adam
 from keras.models import Model
 from sklearn.model_selection import train_test_split
@@ -80,12 +80,15 @@ def train_CNN():
 
     checkpoint = ModelCheckpoint('weights.{epoch:03d}-{val_acc:.4f}.hdf5', monitor='val_acc', verbose=1,
                                  save_best_only=True, mode='auto')
+
+    earlystop = EarlyStopping(monitor='val_loss', min_delta=0, patience=1, verbose=1, mode='auto')
+
     adam = Adam(lr=1e-4, beta_1=0.9, beta_2=0.999, epsilon=1e-08, decay=0.0)
 
     model.compile(optimizer=adam, loss='binary_crossentropy', metrics=['accuracy'])
 
     print("Training")
-    model.fit(X_train, y_train, batch_size=batch_size, epochs=epochs, verbose=1, callbacks=[checkpoint],
+    model.fit(X_train, y_train, batch_size=batch_size, epochs=epochs, verbose=1, callbacks=[checkpoint, earlystop],
               validation_data=(X_test, y_test))  # starts training
 
     # Make prediction so we can take out desired metrics
