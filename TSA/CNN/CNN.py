@@ -6,12 +6,9 @@ from keras.models import Model
 from sklearn.model_selection import train_test_split
 from TSA.CNN.data_handler import load_data
 from sklearn import metrics
-
-
 from TSA.Preproc import Preproc
 import numpy as np
 
-# https://medium.com/@thongonary/how-to-compute-f1-score-for-each-epoch-in-keras-a1acd17715a2
 
 def cnn_make_predict_lable(pred):
     labels = [0, 1]
@@ -21,6 +18,17 @@ def cnn_make_predict_lable(pred):
         arglist.append(labels[np.argmax(p)])
 
     return arglist
+
+
+def normalize_lables(y_test):
+    y_normalized = []
+    for y in y_test:
+        if y[0] == 1:
+            y_normalized.append(0)
+        else:
+            y_normalized.append(1)
+    return y_normalized
+
 
 def train_CNN():
     # Load data
@@ -80,33 +88,22 @@ def train_CNN():
     model.fit(X_train, y_train, batch_size=batch_size, epochs=epochs, verbose=1, callbacks=[checkpoint],
               validation_data=(X_test, y_test))  # starts training
 
+    # Make prediction so we can take out desired metrics
     prediction = model.predict(X_test)
 
-    pred_data = cnn_make_predict_lable(prediction)
+    target_names = ['Negative', 'Positive']
 
-    target_names = ['Positive', 'Negative']
+    print(metrics.classification_report(normalize_lables(y_test), cnn_make_predict_lable(prediction),
+                                        target_names=target_names, digits=3))
 
-    y_normalized = []
-    for y in y_test:
-        if y[0] == 1:
-            y_normalized.append(0)
-        else:
-            y_normalized.append(1)
-
-    print(y_normalized)
-    print(pred_data)
-
-    print(metrics.classification_report(y_normalized, pred_data, target_names=target_names))
-
-
-
+    # To save the trained model
     # model_json = model.to_json()
     # with open('../../../TrainedModels/CNN_base_SemEval.json', 'w') as json_file:
     #     json_file.write(model_json)
     #
     # model.save_weights('../../../TrainedModels/CNN_base_SemEval_w.h5')
 
-    #with open('../../TrainedModels/CNN_base_STS.json', 'w') as json_file:
+    # with open('../../TrainedModels/CNN_base_STS.json', 'w') as json_file:
     #    json_file.write(model_json)
 
-    #model.save_weights('../../TrainedModels/CNN_base_STS_w.h5')
+    # model.save_weights('../../TrainedModels/CNN_base_STS_w.h5')
