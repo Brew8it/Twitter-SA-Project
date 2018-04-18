@@ -2,7 +2,7 @@ from nltk.stem import WordNetLemmatizer
 from nltk.corpus import wordnet as wn
 from nltk.corpus import sentiwordnet as swn
 from nltk import sent_tokenize, word_tokenize, pos_tag
-from sklearn.metrics import accuracy_score
+from sklearn import metrics
 from sklearn.model_selection import train_test_split
 
 from TSA.Preproc import Preproc
@@ -83,4 +83,6 @@ def main():
     # split data into test 80% train, 20%
     X_train, X_test, y_train, y_test = train_test_split(df.tweet, df.lable, test_size=0.2, random_state=0)
     pred_y = [swn_classifier(tweet) for tweet in X_test]
-    print(accuracy_score(y_test, pred_y))
+    target_names = ['Positive', 'Negative']
+    print(metrics.classification_report(y_test, pred_y, target_names=target_names, digits=3))
+

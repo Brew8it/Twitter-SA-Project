@@ -57,7 +57,7 @@ def train_NB():
     print("\nPerforming NB_STS testing at " + str(datetime.datetime.utcnow()))
 
     # Print evaluation metrics
-    print(metrics.classification_report(y_test, predicted, target_names=target_names))
+    print(metrics.classification_report(y_test, predicted, target_names=target_names, digits=3))
 
     sys.stdout = old_stdout
     log_file.close()

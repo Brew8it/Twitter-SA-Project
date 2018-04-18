@@ -40,7 +40,7 @@ def train_SVM():
     predicted = svm_unigram_clf.predict(X_test)
 
     # Print evaluation metrics
-    print(metrics.classification_report(y_test, predicted, target_names=target_names))
+    print(metrics.classification_report(y_test, predicted, target_names=target_names, digits=3))
 
     # joblib.dump(svm_unigram_clf, "../../../TrainedModels/SVM_base_SemEval.pkl")
 
