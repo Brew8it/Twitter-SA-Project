@@ -5,23 +5,34 @@ from keras.optimizers import Adam
 from keras.models import Model
 from sklearn.model_selection import train_test_split
 from TSA.CNN.data_handler import load_data
+from sklearn import metrics
+
 
 from TSA.Preproc import Preproc
+import numpy as np
 
+# https://medium.com/@thongonary/how-to-compute-f1-score-for-each-epoch-in-keras-a1acd17715a2
+
+def cnn_make_predict_lable(pred):
+    labels = [0, 1]
+    arglist = []
+    # Swap from [0.423, 0.677] -> lable = 1
+    for p in pred:
+        arglist.append(labels[np.argmax(p)])
+
+    return arglist
 
 def train_CNN():
-
     # Load data
     pp = Preproc.Preproc()
-    # pp.loadCsv("TSA/datasets/SemEval/4A-English/", "SemEval.csv")
-    pp.loadCsv("TSA/datasets/STS/", "preproc_STS.csv")
-    #pp.clean_data()
+    pp.loadCsv("TSA/datasets/SemEval/4A-English/", "SemEval.csv")
+    # pp.loadCsv("TSA/datasets/STS/", "preproc_STS.csv")
+    # pp.clean_data()
     df = pp.get_twitter_df()
 
     x, y, vocabulary, vocabulary_inv = load_data(df)
 
-
-    X_train, X_test, y_train, y_test = train_test_split(x, y, test_size=0.2, random_state=42)
+    X_train, X_test, y_train, y_test = train_test_split(x, y, test_size=0.2, random_state=0)
 
     print(y_test.shape)
 
@@ -32,7 +43,7 @@ def train_CNN():
     num_filters = 128
     drop = 0.5
 
-    epochs = 3
+    epochs = 100
     batch_size = 64
 
     print("Building model")
@@ -69,13 +80,33 @@ def train_CNN():
     model.fit(X_train, y_train, batch_size=batch_size, epochs=epochs, verbose=1, callbacks=[checkpoint],
               validation_data=(X_test, y_test))  # starts training
 
-    model_json = model.to_json()
+    prediction = model.predict(X_test)
+
+    pred_data = cnn_make_predict_lable(prediction)
+
+    target_names = ['Positive', 'Negative']
+
+    y_normalized = []
+    for y in y_test:
+        if y[0] == 1:
+            y_normalized.append(0)
+        else:
+            y_normalized.append(1)
+
+    print(y_normalized)
+    print(pred_data)
+
+    print(metrics.classification_report(y_normalized, pred_data, target_names=target_names))
+
+
+
+    # model_json = model.to_json()
     # with open('../../../TrainedModels/CNN_base_SemEval.json', 'w') as json_file:
     #     json_file.write(model_json)
     #
     # model.save_weights('../../../TrainedModels/CNN_base_SemEval_w.h5')
 
-    with open('../../TrainedModels/CNN_base_STS.json', 'w') as json_file:
-        json_file.write(model_json)
+    #with open('../../TrainedModels/CNN_base_STS.json', 'w') as json_file:
+    #    json_file.write(model_json)
 
-    model.save_weights('../../TrainedModels/CNN_base_STS_w.h5')
+    #model.save_weights('../../TrainedModels/CNN_base_STS_w.h5')
