@@ -9,3 +9,16 @@ Performing SVM_SemEval testing at 2018-04-10 12:01:39.324477
 
 avg / total       0.86      0.86      0.86      2058
 
+
+Train the model :: 2018-04-24 12:12:10.704627
+Training finished :: 2018-04-24 12:12:14.557354
+
+
+Performing SVM_SemEval testing at 2018-04-24 12:12:14.631846
+             precision    recall  f1-score   support
+
+   Positive      0.874     0.660     0.752       618
+   Negative      0.868     0.959     0.911      1440
+
+avg / total      0.870     0.869     0.863      2058
+

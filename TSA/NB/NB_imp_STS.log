@@ -18,3 +18,16 @@ Performing NB_STS testing at 2018-04-10 12:02:35.785223
 
 avg / total       0.79      0.79      0.79    318769
 
+
+Train the model :: 2018-04-24 12:06:33.792844
+Training finished :: 2018-04-24 12:10:02.064445
+
+
+Performing NB_STS testing at 2018-04-24 12:10:10.452768
+             precision    recall  f1-score   support
+
+   Positive      0.767     0.833     0.798    159435
+   Negative      0.817     0.747     0.780    159334
+
+avg / total      0.792     0.790     0.789    318769
+

@@ -27,3 +27,16 @@ Performing NB_SE testing at 2018-04-10 11:58:24.074738
 
 avg / total       0.85      0.85      0.85      2058
 
+
+Train the model :: 2018-04-24 12:05:34.267501
+Training finished :: 2018-04-24 12:05:34.468297
+
+
+Performing NB_SE testing at 2018-04-24 12:05:34.495176
+             precision    recall  f1-score   support
+
+   Positive      0.802     0.676     0.734       618
+   Negative      0.870     0.928     0.898      1440
+
+avg / total      0.850     0.853     0.849      2058
+

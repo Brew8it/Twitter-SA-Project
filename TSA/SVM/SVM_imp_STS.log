@@ -9,3 +9,17 @@ Performing SVM_STS testing at 2018-04-10 12:11:52.651439
 
 avg / total       0.77      0.76      0.76    318769
 
+
+Train the model :: 2018-04-24 12:12:55.516153
+Training finished :: 2018-04-24 12:20:54.213867
+
+Testing the model :: 2018-04-24 12:20:54.213890
+
+Performing SVM_STS testing at 2018-04-24 12:21:00.479824
+             precision    recall  f1-score   support
+
+   Positive      0.789     0.721     0.753    159435
+   Negative      0.743     0.807     0.774    159334
+
+avg / total      0.766     0.764     0.764    318769
+
