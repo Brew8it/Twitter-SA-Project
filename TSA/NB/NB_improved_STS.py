@@ -16,7 +16,7 @@ from TSA.Preproc.Preproc import Preproc
 def train_NB():
     pp = Preproc()
 
-    pp.loadCsv("TSA/datasets/STS/", "preproc_STS.csv")
+    pp.loadCsv("TSA/datasets/STS/", "STS.csv")
 
     print("Data is loaded :: " + str(datetime.datetime.utcnow()))
 

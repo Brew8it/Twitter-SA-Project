@@ -17,7 +17,7 @@ from TSA.Preproc.Preproc import Preproc
 def train_SVM():
     pp = Preproc()
 
-    pp.loadCsv("TSA/datasets/SemEval/4A-English/", "preproc_SemEval.csv")
+    pp.loadCsv("TSA/datasets/SemEval/4A-English/", "SemEval.csv")
 
     print("Data is loaded :: " + str(datetime.datetime.utcnow()))
 
