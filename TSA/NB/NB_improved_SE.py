@@ -38,7 +38,6 @@ def train_NB():
     log_file = open("../../../NB/NB_imp_SE.log", file_permission)
     sys.stdout = log_file  # redirect output to logfile
 
-    print("Train the model :: " + str(datetime.datetime.utcnow()))
     # Train the model
     # for SemEval
     nb_improved_clf = Pipeline([
@@ -47,10 +46,10 @@ def train_NB():
         ('tfidf', TfidfTransformer(norm=None, use_idf=False)),
         ('clf', MultinomialNB()),
     ])
-
+    print("\nTrain the model :: " + str(datetime.datetime.utcnow()))
     nb_improved_clf.fit(X_train, y_train)
 
-    print("Testing the model :: " + str(datetime.datetime.utcnow()))
+    print("Training finished :: " + str(datetime.datetime.utcnow()) + "\n")
 
     # Test the model
     predicted = nb_improved_clf.predict(X_test)

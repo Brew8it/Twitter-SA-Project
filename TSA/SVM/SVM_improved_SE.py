@@ -40,8 +40,6 @@ def train_SVM():
     log_file = open("../../../SVM/SVM_imp_SE.log", file_permission)
     sys.stdout = log_file  # redirect output to logfile
 
-    print("Train the model :: " + str(datetime.datetime.utcnow()))
-
     # Train the model
     svm_improved_clf = Pipeline([
         ('vect', CountVectorizer(max_df=0.5, ngram_range=(1, 3))),
@@ -49,9 +47,10 @@ def train_SVM():
         ('tfidf', TfidfTransformer(norm=None, use_idf=True)),
         ('clf', SGDClassifier(alpha=0.001, max_iter=1500, penalty='l2')),
     ])
+    print("\nTrain the model :: " + str(datetime.datetime.utcnow()))
     svm_improved_clf.fit(X_train, y_train)
 
-    print("Testing the model :: " + str(datetime.datetime.utcnow()))
+    print("Training finished :: " + str(datetime.datetime.utcnow()) + "\n")
 
     # Test the model
     predicted = svm_improved_clf.predict(X_test)

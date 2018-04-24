@@ -39,7 +39,6 @@ def train_NB():
     log_file = open("../../NB/NB_imp_STS.log", file_permission)
     sys.stdout = log_file  # redirect output to logfile
 
-    print("Train the model :: " + str(datetime.datetime.utcnow()))
     # Train the model
     nb_improved_clf = Pipeline([
         ('vect', CountVectorizer(max_df=0.5, ngram_range=(1, 3))),
@@ -47,9 +46,10 @@ def train_NB():
         ('tfidf', TfidfTransformer(norm='l2', use_idf=False)),
         ('clf', MultinomialNB()),
     ])
+    print("\nTrain the model :: " + str(datetime.datetime.utcnow()))
     nb_improved_clf.fit(X_train, y_train)
 
-    print("Testing the model :: " + str(datetime.datetime.utcnow()))
+    print("Training finished :: " + str(datetime.datetime.utcnow()) + "\n")
 
     # Test the model
     predicted = nb_improved_clf.predict(X_test)
