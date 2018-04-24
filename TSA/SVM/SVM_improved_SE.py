@@ -20,9 +20,8 @@ def train_SVM():
     pp.loadCsv("TSA/datasets/SemEval/4A-English/", "SemEval.csv")
 
     print("Data is loaded :: " + str(datetime.datetime.utcnow()))
-
+    pp.clean_data()
     df = pp.get_twitter_df()
-
     print("Data is cleand time for splitting :: " + str(datetime.datetime.utcnow()))
 
     X_train, X_test, y_train, y_test = train_test_split(df.tweet, df.lable, test_size=0.2, random_state=0)

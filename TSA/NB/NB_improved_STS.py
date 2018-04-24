@@ -20,6 +20,7 @@ def train_NB():
 
     print("Data is loaded :: " + str(datetime.datetime.utcnow()))
 
+    pp.clean_data()
     df = pp.get_twitter_df()
 
     print("Data is cleand time for splitting :: " + str(datetime.datetime.utcnow()))
