@@ -57,7 +57,6 @@ def pred_load_data(df, vocab_name='vocabulary_SE'):
     df["tweet"] = df["tweet"].apply(lambda x: pad_tweet(x, max_length))
     vocabulary = load_obj(vocab_name)
     #vocabulary, inverse_vocabulary = create_vocabulary(df.tweet)
-    print(vocabulary)
     x = get_tweets_as_numbers_pred(df.tweet, vocabulary)
 
     return x

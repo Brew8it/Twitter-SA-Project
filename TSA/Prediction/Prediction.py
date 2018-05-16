@@ -142,6 +142,7 @@ class Prediction:
 
         for i in range(len(self.cnnlist)):
             text = self.DF_cnn[i]
+            print(text)
             pred = self.cnnlist[i].predict(text)
             pred_remade = self.cnn_make_predict_lable(pred)
             self.make_posneg_list(pred_remade)
