@@ -1,4 +1,6 @@
 import itertools
+import os
+import pickle
 from collections import Counter
 import numpy as np
 from TSA.Preproc import Preproc
@@ -17,6 +19,20 @@ def get_tweets_as_numbers(tweets, vocabulary):
     return np.array([[vocabulary[word] for word in tweet] for tweet in tweets])
 
 
+def get_tweets_as_numbers_pred(tweets, vocabulary):
+    numbers = []
+    a = []
+
+    for tweet in tweets:
+        for word in tweet:
+
+            if word in vocabulary:
+                numbers.append(vocabulary[word])
+        a.append(numbers)
+        numbers = []
+    return np.array(a)
+
+
 def pad_tweet(tweet, max_length, padding="<PAD/>"):
     return tweet + [padding] * (max_length - len(tweet))
 
@@ -32,18 +48,19 @@ def create_vocabulary(tweets):
     return [vocabulary, inverse_vocabulary]
 
 
-def pred_load_data(df):
+def pred_load_data(df, vocab_name='vocabulary_SE'):
     # Convert tweet to list of words and apply padding
     df["tweet"] = df["tweet"].apply(lambda x: x.split(" "))
     # set max length to a fixed size..
     # max_length = get_max_tweet_sequence(df.tweet)
     max_length = 64
     df["tweet"] = df["tweet"].apply(lambda x: pad_tweet(x, max_length))
-    vocabulary, inverse_vocabulary = create_vocabulary(df.tweet)
-    x = get_tweets_as_numbers(df.tweet, vocabulary)
+    vocabulary = load_obj(vocab_name)
+    #vocabulary, inverse_vocabulary = create_vocabulary(df.tweet)
+    print(vocabulary)
+    x = get_tweets_as_numbers_pred(df.tweet, vocabulary)
+
     return x
-
-
 
 
 def load_data(df):
@@ -60,7 +77,20 @@ def load_data(df):
 
     vocabulary, inverse_vocabulary = create_vocabulary(df.tweet)
 
+    # Save vocabulary for later predictions
+    # save_obj(vocabulary, 'vocabulary_SE')
+
     x = get_tweets_as_numbers(df.tweet, vocabulary)
 
     # return [x, df.lable, vocabulary, inverse_vocabulary]
     return [x, y, vocabulary, inverse_vocabulary]
+
+
+def save_obj(obj, name):
+    with open(name + '.pkl', 'wb') as f:
+        pickle.dump(obj, f)
+
+
+def load_obj(name):
+    with open('TSA/CNN/' + name + '.pkl', 'rb') as f:
+        return pickle.load(f)

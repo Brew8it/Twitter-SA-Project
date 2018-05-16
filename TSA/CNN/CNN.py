@@ -34,7 +34,7 @@ def train_CNN():
     # Load data
     pp = Preproc.Preproc()
     pp.loadCsv("TSA/datasets/SemEval/4A-English/", "SemEval.csv")
-    # pp.loadCsv("TSA/datasets/STS/", "preproc_STS.csv")
+    #pp.loadCsv("TSA/datasets/STS/", "preproc_STS.csv")
     # pp.clean_data()
     df = pp.get_twitter_df()
 

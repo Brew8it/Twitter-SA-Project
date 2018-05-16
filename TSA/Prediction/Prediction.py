@@ -14,9 +14,9 @@ from TSA.CNN import data_handler
 
 
 class Prediction:
-    modelnames = ["TSA/TrainedModels/NB_imp_SemEval.pkl", "TSA/TrainedModels/NB_imp_STS.pkl",
-                  "TSA/TrainedModels/SVM_imp_SemEval.pkl",
-                  "TSA/TrainedModels/SVM_imp_STS.pkl"]
+    modelnames = ["TSA/TrainedModels/NB_base_SemEval.pkl", "TSA/TrainedModels/NB_base_STS.pkl",
+                  "TSA/TrainedModels/SVM_base_SemEval.pkl",
+                  "TSA/TrainedModels/SVM_base_STS.pkl"]
 
     cnnmodels = [["TSA/TrainedModels/CNN_base_SemEval.json", "TSA/TrainedModels/CNN_base_SemEval_w.h5"], ["TSA/TrainedModels/CNN_base_STS.json", "TSA/TrainedModels/CNN_base_STS_w.h5"]]
 
@@ -32,7 +32,7 @@ class Prediction:
         self.numberOfposNeg = []
         self.pred_list = []
         self.db_list = []
-        self.clean_DF_cnn = []
+        self.DF_cnn = []
 
     def load_models(self):
         for clf in self.modelnames:
@@ -62,7 +62,7 @@ class Prediction:
         # make cnn preproc
         self.make_cnn_preproc()
         # make cnn_pred
-        self.cnn_predict(self.clean_DF_cnn)
+        self.cnn_predict()
         self.make_average_prediction()
         self.make_db_list()
         return self.db_list
@@ -132,9 +132,17 @@ class Prediction:
 
 
 
-    def cnn_predict(self, text):
-        for clf in self.cnnlist:
-            pred = clf.predict(text)
+    def cnn_predict(self):
+        # for clf in self.cnnlist:
+        #     pred = clf.predict(text)
+        #     pred_remade = self.cnn_make_predict_lable(pred)
+        #     self.make_posneg_list(pred_remade)
+        #     # Convert to int list so it will fit into DB.
+        #     self.pred_list.append([int(i) for i in pred_remade])
+
+        for i in range(len(self.cnnlist)):
+            text = self.DF_cnn[i]
+            pred = self.cnnlist[i].predict(text)
             pred_remade = self.cnn_make_predict_lable(pred)
             self.make_posneg_list(pred_remade)
             # Convert to int list so it will fit into DB.
@@ -149,7 +157,8 @@ class Prediction:
         self.cleanTwitterDF = self.preProcess.get_twitter_df()
 
     def make_cnn_preproc(self):
-        self.clean_DF_cnn = data_handler.pred_load_data(self.preProcess.get_twitter_df())
+        self.DF_cnn.append(data_handler.pred_load_data(self.preProcess.get_twitter_df().copy()))
+        self.DF_cnn.append(data_handler.pred_load_data(self.preProcess.get_twitter_df().copy(), 'vocabulary_STS'))
 
 
 def main():
