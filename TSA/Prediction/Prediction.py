@@ -14,9 +14,9 @@ from TSA.CNN import data_handler
 
 
 class Prediction:
-    modelnames = ["TSA/TrainedModels/NB_base_SemEval.pkl", "TSA/TrainedModels/NB_base_STS.pkl",
-                  "TSA/TrainedModels/SVM_base_SemEval.pkl",
-                  "TSA/TrainedModels/SVM_base_STS.pkl"]
+    modelnames = ["TSA/TrainedModels/NB_imp_SemEval.pkl", "TSA/TrainedModels/NB_imp_STS.pkl",
+                  "TSA/TrainedModels/SVM_imp_SemEval.pkl",
+                  "TSA/TrainedModels/SVM_imp_STS.pkl"]
 
     cnnmodels = [["TSA/TrainedModels/CNN_base_SemEval.json", "TSA/TrainedModels/CNN_base_SemEval_w.h5"], ["TSA/TrainedModels/CNN_base_STS.json", "TSA/TrainedModels/CNN_base_STS_w.h5"]]
 
@@ -87,8 +87,6 @@ class Prediction:
 
 
     def make_db_list(self):
-        # change this dependeing on how many models!!
-        # NBSE, NBSTS, SVMSE, SVMSTS
         NBSE = self.pred_list[0]
         NBSTS = self.pred_list[1]
         SVMSE = self.pred_list[2]
@@ -96,14 +94,6 @@ class Prediction:
         CNNSE = self.pred_list[4]
         CNNSTS = self.pred_list[5]
         AVG = self.pred_list[6]
-        ## until models are done
-
-        # CNNSE = []
-        # CNNSTS = []
-        #
-        # for i in range(len(self.pred_list[0])):
-        #     CNNSTS.append(0)
-        #   #  CNNSE.append(0)
         self.db_list = [list(e) for e in zip(list(self.twitterDF.tweet), NBSE, NBSTS, SVMSE, SVMSTS, CNNSE, CNNSTS, AVG)]
 
     def make_posneg_list(self, predlist):
@@ -121,7 +111,7 @@ class Prediction:
             self.pred_list.append([int(i) for i in pred])
 
     def cnn_make_predict_lable(self, pred):
-        labels = [0, 1]
+        labels = [1, 0]
         arglist = []
         # Swap from [0.423, 0.677] -> lable = 0
         for p in pred:
@@ -133,17 +123,9 @@ class Prediction:
 
 
     def cnn_predict(self):
-        # for clf in self.cnnlist:
-        #     pred = clf.predict(text)
-        #     pred_remade = self.cnn_make_predict_lable(pred)
-        #     self.make_posneg_list(pred_remade)
-        #     # Convert to int list so it will fit into DB.
-        #     self.pred_list.append([int(i) for i in pred_remade])
-
-        for i in range(len(self.cnnlist)):
-            text = self.DF_cnn[i]
-            print(text)
-            pred = self.cnnlist[i].predict(text)
+        for j in range(len(self.cnnlist)):
+            text = self.DF_cnn[j]
+            pred = self.cnnlist[j].predict(text)
             pred_remade = self.cnn_make_predict_lable(pred)
             self.make_posneg_list(pred_remade)
             # Convert to int list so it will fit into DB.
@@ -158,7 +140,7 @@ class Prediction:
         self.cleanTwitterDF = self.preProcess.get_twitter_df()
 
     def make_cnn_preproc(self):
-        self.DF_cnn.append(data_handler.pred_load_data(self.preProcess.get_twitter_df().copy()))
+        self.DF_cnn.append(data_handler.pred_load_data(self.preProcess.get_twitter_df().copy(), 'vocabulary_SE'))
         self.DF_cnn.append(data_handler.pred_load_data(self.preProcess.get_twitter_df().copy(), 'vocabulary_STS'))
 
 

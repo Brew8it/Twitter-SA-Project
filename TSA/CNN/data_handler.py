@@ -1,9 +1,9 @@
 import itertools
-import os
 import pickle
 from collections import Counter
 import numpy as np
-from TSA.Preproc import Preproc
+from sklearn.externals import joblib
+
 
 
 def split_tweets_by_words(tweets):
@@ -25,9 +25,11 @@ def get_tweets_as_numbers_pred(tweets, vocabulary):
 
     for tweet in tweets:
         for word in tweet:
-
             if word in vocabulary:
                 numbers.append(vocabulary[word])
+        while len(numbers) < 64:
+            numbers.append(vocabulary["<PAD/>"])
+
         a.append(numbers)
         numbers = []
     return np.array(a)
@@ -48,15 +50,14 @@ def create_vocabulary(tweets):
     return [vocabulary, inverse_vocabulary]
 
 
-def pred_load_data(df, vocab_name='vocabulary_SE'):
+def pred_load_data(df, vocab_name):
     # Convert tweet to list of words and apply padding
     df["tweet"] = df["tweet"].apply(lambda x: x.split(" "))
     # set max length to a fixed size..
-    # max_length = get_max_tweet_sequence(df.tweet)
     max_length = 64
     df["tweet"] = df["tweet"].apply(lambda x: pad_tweet(x, max_length))
-    vocabulary = load_obj(vocab_name)
-    #vocabulary, inverse_vocabulary = create_vocabulary(df.tweet)
+    vocabulary = joblib.load("TSA/CNN/" + vocab_name + ".pkl")
+
     x = get_tweets_as_numbers_pred(df.tweet, vocabulary)
 
     return x
@@ -77,7 +78,8 @@ def load_data(df):
     vocabulary, inverse_vocabulary = create_vocabulary(df.tweet)
 
     # Save vocabulary for later predictions
-    # save_obj(vocabulary, 'vocabulary_SE')
+    joblib.dump(vocabulary, "../../../CNN/vocabulary_SE.pkl")
+    #joblib.dump(vocabulary, "../../CNN/vocabulary_STS.pkl")
 
     x = get_tweets_as_numbers(df.tweet, vocabulary)
 

@@ -42,8 +42,6 @@ def train_CNN():
 
     X_train, X_test, y_train, y_test = train_test_split(x, y, test_size=0.2, random_state=0)
 
-    print(y_test.shape)
-
     sequence_length = x.shape[1]
     vocabulary_size = len(vocabulary_inv)
     embedding_dim = 128
@@ -92,21 +90,21 @@ def train_CNN():
               validation_data=(X_test, y_test))  # starts training
 
     # Make prediction so we can take out desired metrics
-    prediction = model.predict(X_test)
+    #prediction = model.predict(X_test)
 
-    target_names = ['Negative', 'Positive']
+    #target_names = ['Negative', 'Positive']
 
-    print(metrics.classification_report(normalize_lables(y_test), cnn_make_predict_lable(prediction),
-                                        target_names=target_names, digits=3))
+    #print(metrics.classification_report(normalize_lables(y_test), cnn_make_predict_lable(prediction),
+    #                                    target_names=target_names, digits=3))
 
     # To save the trained model
-    # model_json = model.to_json()
-    # with open('../../../TrainedModels/CNN_base_SemEval.json', 'w') as json_file:
-    #     json_file.write(model_json)
-    #
-    # model.save_weights('../../../TrainedModels/CNN_base_SemEval_w.h5')
+    model_json = model.to_json()
+    with open('../../../TrainedModels/CNN_base_SemEval.json', 'w') as json_file:
+         json_file.write(model_json)
 
-    # with open('../../TrainedModels/CNN_base_STS.json', 'w') as json_file:
-    #    json_file.write(model_json)
+    model.save_weights('../../../TrainedModels/CNN_base_SemEval_w.h5')
 
-    # model.save_weights('../../TrainedModels/CNN_base_STS_w.h5')
+    #with open('../../TrainedModels/CNN_base_STS.json', 'w') as json_file:
+    #   json_file.write(model_json)
+
+    #model.save_weights('../../TrainedModels/CNN_base_STS_w.h5')
